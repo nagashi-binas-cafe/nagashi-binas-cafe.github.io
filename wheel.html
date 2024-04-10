@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<title>Крутящееся изображение с интерактивным поворотом</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+    button{
+        all: unset;
+    }
+    h1{
+        margin: 0;
+    }
+
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        height: 100vh;
+    }
+    .left-half, .right-half{
+        box-sizing: border-box;
+    }
+    .left-half {
+        width: 65%;
+        overflow: hidden;
+        position: relative;
+        transition: background-color 0.3s linear;
+    }
+    #background{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 50%;
+        transition: background-color 0.3s linear;
+    }
+    .left-half img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        position: absolute;
+        transform-origin: center;
+    }
+    #click-area{
+        position: absolute;
+        transition: all 0.3s ease; 
+    }
+    #click-area * {
+        transition: all 0.3s ease; 
+    }
+    #click-area.zoomed{
+        /* left: -50%; */
+        transition: all 0.3s ease; 
+        /* height: 200%; */
+        transform: translateY(50%);
+    }
+    #click-area.zoomed .inner-img-container{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        /* transform: translateY(25%); */
+    }
+    #click-area .inner-img-container{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        transform: translateY(0%);
+    }
+    #wheel{
+        transform: rotate(0.0deg);
+        transition: all 0.3s ease; 
+    }
+    #click-area{
+        width: 100%;
+        height: 100%;
+    }
+
+    .zoom, .prev, .next{
+        width: 75px;
+        height: 75px;
+        transition: all 0.3s ease; 
+        transform: rotate(0deg) scale(1);
+        margin: 10px;
+        text-align: center;
+        border-radius: 38px;
+    }
+    .icon-size{
+        font-size: 40px;
+    }
+    .zoom:hover, .prev:hover, .next:hover{
+        width: 75px;
+        height: 75px;
+        /* background-color: #ddd; */
+    }
+    .zoom{
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+    .zoom:hover{
+        transform: scale(1.2);
+    }
+    .prev{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+    }
+    .prev:hover{
+        transform: rotate(60deg);
+    }
+    .next{
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+    .next:hover{
+        transform: rotate(-60deg);
+    }
+
+    .right-half {
+        width: 35%;
+        background-color: #f0f0f0; /* Фон правой половины страницы */
+        transition: background-color 0.3s linear;
+    }
+    .right-half *{
+        padding: 10px;
+    }
+
+    @media (max-width: 767px) {
+        .container {
+            flex-direction: column;
+        }
+        .left-half, .right-half {
+            width: 100%;
+        }
+        .left-half {
+            height: 60%;
+        }
+        .right-half {
+            height: 40%;
+            overflow: scroll;
+        }
+    }
+    .artist-info{
+        background-color: rgb(0, 0, 0, .5);
+        margin: 15px;
+        border-radius: 5px;
+        padding-bottom: 30px;
+
+        color: #fff;
+    }
+    .artist-info a{
+        display: block;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    .artist-info a:visited, .artist-info a:link, .artist-info a:hover{
+        color: #fff;
+        text-decoration: none;
+        font-family: "Montserrat", sans-serif;
+        font-optical-sizing: auto;
+        font-style: normal;
+    }
+    .artist-info a:hover{
+        text-decoration: underline;
+    }
+    .artist-info i{
+        padding-left: 0px;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="left-half" id="left-half">
+        <div id="background">
+
+        </div>
+        <div id="click-area">
+            <div class="inner-img-container">
+                <img id="wheel" src="https://cdn.discordapp.com/attachments/798148114174443520/1227390475304964187/pngtree-color-wheel-icon-design-on-white-background-png-image_4873358.png?ex=66283b75&is=6615c675&hm=e63dc31ac19b22e6cd1cf4192701ccbb0523001f94e0f92130f8b958b17f9bf6&" alt="Крутящееся изображение">
+            </div>
+        </div>
+        <button class="zoom">
+            <i><span class="material-symbols-outlined icon-size" id="zoom-icon">
+                zoom_in
+            </span></i>
+        </button>
+        <button class="next">
+            <i><span class="material-symbols-outlined icon-size">
+                rotate_left
+            </span></i>
+        </button>
+        <button class="prev">
+            <i><span class="material-symbols-outlined icon-size">
+                rotate_right
+            </span></i>
+        </button>
+    </div>
+    <div class="right-half" id="right-half" style="">
+        <div class="artist-info">
+            <div id="name"><h1>Name 1</h1></div>
+            <div id="links">
+                <a href="">sdiifhsidihfsd</a>
+            </div>
+        </div>
+        <!-- Здесь может быть контент для правой половины страницы -->
+    </div>
+</div>
+
+<script>
+    const artists = {
+        1: {
+            name: 'name 1',
+            links: {
+                twitter: {name: 'twitter name 1', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'},
+                instagram: {name: 'instagram name 1', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'},
+                pixiv: {name: 'pixiv name 1', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'},
+                vk: {name: 'vk name 1', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}
+            },
+            color: 'f4e60b'
+        },
+        2: {
+            name: 'name 2',
+            links: {
+                twitter: {name: 'twitter name 2', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'},
+                vk: {name: 'vk name 2', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'},
+            },
+            color: '8cbf26' 
+        },
+        3: {
+            name: 'name 3',
+            links: {
+                twitter: {name: 'twitter name 3', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'},
+                pixiv: {name: 'pixiv name 3', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'},
+            },
+            color: '00935c'
+        },
+        4: {
+            name: 'name 4',
+            links: {twitter: {name: 'twitter name 4', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}},
+            color: '0796be'
+        },
+        5: {
+            name: 'name 5',
+            links: {twitter: {name: 'twitter name 5', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}},
+            color: '2b71b6'
+        },
+        6: {
+            name: 'name 6',
+            links: {twitter: {name: 'twitter name 6', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}},
+            color: '454c9c'
+        },
+        7: {
+            name: 'name 7',
+            links: {twitter: {name: 'twitter name 7', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}},
+            color: '6e3991'
+        },
+        8: {
+            name: 'name 8',
+            links: {twitter: {name: 'twitter name 8', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}},
+            color: 'c40380'
+        },
+        9: {
+            name: 'name 9',
+            links: {twitter: {name: 'twitter name 9', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}},
+            color: 'e32316'
+        },
+        10: {
+            name: 'name 10',
+            links: {twitter: {name: 'twitter name 10', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}},
+            color: 'eb621a'
+        },
+        11: {
+            name: 'name 11',
+            links: {twitter: {name: 'twitter name 11', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}},
+            color: 'f18e17'
+        },
+        12: {
+            name: 'name 12',
+            links: {twitter: {name: 'twitter name 12', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}},
+            color: 'fdbf0c'
+        }
+    }
+
+    const clickArea = document.getElementById('click-area');
+    const wheel = document.getElementById('wheel');
+    const leftHalf = document.getElementById('left-half');
+    const rightHalf = document.getElementById('right-half');
+    const bg = document.getElementById('background');
+
+    function clearInnerHTML(){
+        $('#links a').remove()
+    }
+
+    $( document ).ready(function() {
+
+        $('#name').html(`<h1>${artists[1]['name']}</h1>`)
+        rightHalf.style.backgroundColor = `#${artists[1]['color']}`
+        bg.style.backgroundColor = `#${artists[1]['color']}`
+
+        clearInnerHTML()
+        for (const [key, value] of Object.entries(artists[1]['links'])) {
+            $('#links').append(`<a href="${value['url']}" target="_blank"><i class='fab fa-${key}'></i>${value['name']}</a>`)
+        }
+
+    });
+
+    var zoomed = false;
+    var el, rot = 0;
+    const numberOfSectors = 12;
+
+    const scale = 1.4
+
+    $(document).on('click', '.zoom', function (e) {
+        zoomed = !zoomed
+
+        if (zoomed){
+            $('#click-area').addClass('zoomed')
+            $('#zoom-icon').html('zoom_out')
+            clickArea.style.transform = ("scale(" + scale + ") translateY(35%)");
+        }
+        else{
+            $('#click-area').removeClass('zoomed')
+            $('#zoom-icon').html('zoom_in')
+            clickArea.style.transform = ("scale(1)");
+        }
+
+        wheel.style.transform = ("rotate( " + rot + "deg )" + (zoomed ? " scale(" + scale + ")" : ""));
+    });
+
+    function getImageAngle() {
+        var st = window.getComputedStyle(wheel, null);
+        var tm = st.getPropertyValue("-webkit-transform") ||
+                 st.getPropertyValue("-moz-transform") ||
+                 st.getPropertyValue("-ms-transform") ||
+                 st.getPropertyValue("-o-transform") ||
+                 st.getPropertyValue("transform") ||
+                 "none";
+        if (tm != "none") {
+          var values = tm.split('(')[1].split(')')[0].split(',');
+          var angle = Math.round(Math.atan2(values[1],values[0]) * (180/Math.PI));
+          return angle
+        }
+        return 0;
+    }
+
+    function rotateThis(nR) {
+        
+        // nR = nR - (nR % (360/numberOfSectors))
+        
+        var aR;
+
+        rot = rot || 0; // if rot undefined or 0, make 0, else rot
+        aR = rot % 360;
+        if ( aR < 0 ) { aR += 360; }
+        if ( aR < 180 && (nR > (aR + 180)) ) { rot -= 360; }
+        if ( aR >= 180 && (nR <= (aR - 180)) ) { rot += 360; }
+        rot += (nR - aR) - (rot % (360/numberOfSectors));
+        
+        wheel.style.transform = ("rotate( " + rot + "deg )" + (zoomed ? " scale(" + scale + ")" : ""));
+    }
+
+    function clickedButton(direction) {
+
+        // let imageRotationAngle = getImageAngle()
+        let imageRotationAngle = rot % 360
+        if (-180 >= imageRotationAngle && -360 <= imageRotationAngle){
+            imageRotationAngle += 360
+        }
+        console.log(imageRotationAngle)
+        let newRotationAngle = imageRotationAngle - 30 * direction
+        rotateThis(newRotationAngle)
+
+        var rotation = rot % 360
+        var index = Math.ceil((rotation < 0 ? 360 - (-rotation) : rotation) / (360/numberOfSectors) + 1)
+
+        $('#name').html(`<h1>${artists[index]['name']}</h1>`)
+        rightHalf.style.backgroundColor = `#${artists[index]['color']}`
+        bg.style.backgroundColor = `#${artists[index]['color']}`
+
+        clearInnerHTML()
+        for (const [key, value] of Object.entries(artists[index]['links'])) {
+            $('#links').append(`<a href="${value['url']}" target="_blank"><i class='fab fa-${key}'></i>${value['name']}</a>`)
+        }
+
+    }
+
+    $(document).on('click', '.next', function (e) {
+        clickedButton(1)
+    });
+    $(document).on('click', '.prev', function (e) {
+        clickedButton(-1)
+    });
+</script>
+</body>
+</html>
