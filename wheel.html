@@ -46,12 +46,19 @@
         opacity: 50%;
         transition: background-color 0.3s linear;
     }
-    .left-half img {
+    .left-half #wheel {
         width: 100%;
         height: 100%;
         object-fit: contain;
         position: absolute;
         transform-origin: center;
+    }
+    #logo{
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        top: calc(50% - 25px + 2px);
+        left: calc(50% - 25px);
     }
     #click-area{
         position: absolute;
@@ -128,16 +135,79 @@
     .next:hover{
         transform: rotate(-60deg);
     }
+    #discord{
+        position: absolute;
+        right: 0;
+        top: 80px;
+        font-size: 27px;
+        width: 50px;
+        height: 50px;
+        margin: 15px;
+        margin-right: 20px;
+        text-align: center;
+        vertical-align: middle;
+        line-height: 50px;
+        color: black;
+    }
+    #discord:visited, #discord:link, #discord:hover{
+        color: black;
+    }
 
     .right-half {
         width: 35%;
         background-color: #f0f0f0; /* Фон правой половины страницы */
         transition: background-color 0.3s linear;
+        /* z-index: -1000; */
     }
     .right-half *{
         padding: 10px;
     }
 
+    .artist-info{
+        position: relative;
+        background-color: rgb(0, 0, 0, .5);
+        margin: 15px;
+        border-radius: 5px;
+        padding-bottom: 30px;
+        height: calc(100% - 70px);
+        overflow-x: hidden;
+
+        color: #fff;
+    }
+    .artist-info a{
+        display: block;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    .artist-info a:visited, .artist-info a:link, .artist-info a:hover{
+        position: relative;
+        color: #fff;
+        text-decoration: none;
+        font-family: "Montserrat", sans-serif;
+        font-optical-sizing: auto;
+        font-style: normal;
+        z-index: 10;
+    }
+    .artist-info a:hover{
+        text-decoration: underline;
+    }
+    .artist-info i{
+        padding-left: 0px;
+    }
+    .links a{
+        position: relative;
+        z-index: 9999;
+    }
+    #name, #name h1{
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+    #aka {
+        padding-top: 0;
+        padding-left: 20px;
+        font-size: 12px;
+        color: #aaa;
+    }
     @media (max-width: 767px) {
         .container {
             flex-direction: column;
@@ -152,32 +222,13 @@
             height: 40%;
             overflow: scroll;
         }
-    }
-    .artist-info{
-        background-color: rgb(0, 0, 0, .5);
-        margin: 15px;
-        border-radius: 5px;
-        padding-bottom: 30px;
-
-        color: #fff;
-    }
-    .artist-info a{
-        display: block;
-        padding-top: 0;
-        padding-bottom: 0;
-    }
-    .artist-info a:visited, .artist-info a:link, .artist-info a:hover{
-        color: #fff;
-        text-decoration: none;
-        font-family: "Montserrat", sans-serif;
-        font-optical-sizing: auto;
-        font-style: normal;
-    }
-    .artist-info a:hover{
-        text-decoration: underline;
-    }
-    .artist-info i{
-        padding-left: 0px;
+        .artist-info{
+            height: auto;
+        }
+        #logo{
+            display: hidden;
+            opacity: 0%;
+        }
     }
 
     .tutorial{
@@ -222,13 +273,45 @@
     .hidden{
         visibility: hidden;
     }
+
+    /* .sprite{
+        position: relative;
+        z-index: 10;
+        height: auto;
+        max-width: 230px;
+        width: 100%;
+        width: auto;
+        -webkit-mask-image: -webkit-gradient(linear, left top, right bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+        pointer-events: none;
+        margin: 10px;
+    } */
+    .artist-info img{
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        display: table-cell;
+        vertical-align: bottom;
+        height: 80%;
+        width: auto;
+        object-fit: contain;
+        padding: 0;
+        pointer-events: none;
+        -webkit-mask-image: -webkit-gradient(linear, left top, right bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+    }
+    @media (max-width: 767px) {
+        .artist-info img{
+            top: 0;
+            /* height: 33%;
+            margin-right: 20px; */
+        }
+    }
 </style>
 </head>
 <body>
 <div class="container">
     <div class="tutorial">
         <h1>Before you go...</h1>
-        <i><span class="material-symbols-outlined" id="zoom-icon">
+        <i><span class="material-symbols-outlined">
             zoom_in
         </span></i><span class="text">Zoom in/out</span><br>
         <i><span class="material-symbols-outlined">
@@ -244,7 +327,8 @@
         </div>
         <div id="click-area">
             <div class="inner-img-container">
-                <img id="wheel" src="https://cdn.discordapp.com/attachments/798148114174443520/1227628747553898547/pngtree-color-wheel-icon-design-on-546white-background-png-image_4873358.png?ex=6629195d&is=6616a45d&hm=df0d6a75eeb3b4a9951e70a2d72e6d2838c7206ae16ef9d980a6517ca1aa02fb&" alt="Крутящееся изображение">
+                <img id="wheel" src="https://lh3.googleusercontent.com/d/1GFSDumrlYGryTuOhgqZwEB2_BhE6uhJQ" alt="Крутящееся изображение">
+                <img id="logo" src="https://lh3.googleusercontent.com/d/1JjgqnhYnpwr97w1uSl5-Lce_heplI-Fd" alt="Лого">
             </div>
         </div>
         <button class="zoom">
@@ -252,6 +336,7 @@
                 zoom_in
             </span></i>
         </button>
+        <a href="https://discord.gg/SWHewFPRfn"><div id="discord" class="fab fa-discord"></div></a>
         <button class="next">
             <i><span class="material-symbols-outlined icon-size">
                 rotate_left
@@ -264,8 +349,11 @@
         </button>
     </div>
     <div class="right-half" id="right-half" style="">
+        <!-- <div class="sprite"><img src="https://en.touhouwiki.net/images/5/51/Th10Hina.png" /></div> -->
         <div class="artist-info">
+            <img id="sprite" src="https://en.touhouwiki.net/images/5/51/Th10Hina.png" />
             <div id="name"><h1>Name 1</h1></div>
+            <!-- <div id="aka">aka this and this</div> -->
             <div id="links">
                 <a href="">sdiifhsidihfsd</a>
             </div>
@@ -276,80 +364,96 @@
 
 <script>
     const artists = {
-        1: {
-            name: 'name 1',
-            links: {
-                twitter: {name: 'twitter name 1', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'},
-                instagram: {name: 'instagram name 1', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'},
-                pixiv: {name: 'pixiv name 1', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'},
-                vk: {name: 'vk name 1', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}
-            },
-            color: 'f4e60b'
-        },
         2: {
-            name: 'name 2',
+            name: 'Borsh',
+            sprite: 'https://en.touhouwiki.net/images/5/58/Th14Sekibanki.png',
             links: {
-                twitter: {name: 'twitter name 2', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'},
-                vk: {name: 'vk name 2', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'},
+                twitter: {name: 'YaVsralas', url: 'https://twitter.com/vsralas?t=nLUq-2M9UydX3CMEUats9Q&s=09'}
             },
-            color: '8cbf26' 
+            color: 'ff0086'
         },
-        3: {
-            name: 'name 3',
+        1: {
+            name: 'IamSuicc',
+            sprite: 'https://en.touhouwiki.net/images/f/ff/Th155Kasen.png',
             links: {
-                twitter: {name: 'twitter name 3', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'},
-                pixiv: {name: 'pixiv name 3', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'},
+                vk: {name: 'reincarnationkages', url: 'https://vk.com/reincarnationkages'},
             },
-            color: '00935c'
-        },
-        4: {
-            name: 'name 4',
-            links: {twitter: {name: 'twitter name 4', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}},
-            color: '0796be'
-        },
-        5: {
-            name: 'name 5',
-            links: {twitter: {name: 'twitter name 5', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}},
-            color: '2b71b6'
-        },
-        6: {
-            name: 'name 6',
-            links: {twitter: {name: 'twitter name 6', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}},
-            color: '454c9c'
-        },
-        7: {
-            name: 'name 7',
-            links: {twitter: {name: 'twitter name 7', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}},
-            color: '6e3991'
-        },
-        8: {
-            name: 'name 8',
-            links: {twitter: {name: 'twitter name 8', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}},
-            color: 'c40380'
-        },
-        9: {
-            name: 'name 9',
-            links: {twitter: {name: 'twitter name 9', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}},
-            color: 'e32316'
+            color: 'ff0000' 
         },
         10: {
-            name: 'name 10',
-            links: {twitter: {name: 'twitter name 10', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}},
-            color: 'eb621a'
+            name: 'Collectolider',
+            sprite: 'https://en.touhouwiki.net/images/5/5b/Th19Saki.png',
+            links: {
+                twitter: {name: 'collidellector', url: 'https://twitter.com/collidellector'},
+                pixiv: {name: 'Collectollider', url: 'https://www.pixiv.net/en/users/8515429'},
+            },
+            color: 'ffa300'
         },
-        11: {
-            name: 'name 11',
-            links: {twitter: {name: 'twitter name 11', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}},
-            color: 'f18e17'
+        9: {
+            name: 'KateDragna',
+            sprite: 'https://en.touhouwiki.net/images/9/9a/Th10Suwako.png',
+            links: {twitter: {name: 'KateDragna', url: 'https://twitter.com/kate_dragna'}},
+            color: 'ffe900'
         },
-        12: {
-            name: 'name 12',
-            links: {twitter: {name: 'twitter name 12', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}},
-            color: 'fdbf0c'
+        8: {
+            name: 'shiratori',
+            sprite: 'https://en.touhouwiki.net/images/0/07/Th13Tojiko.png',
+            links: {twitter: {name: 'shiratori-p', url: 'https://twitter.com/sAshiratori'}},
+            color: '00ff06'
+        },
+        7: {
+            name: 'Dungeon Toaster',
+            sprite: 'https://en.touhouwiki.net/images/b/b0/Th13Seiga.png',
+            links: {twitter: {name: 'Dungeon Toaster', url: 'https://twitter.com/OrdinaryRizzych'}},
+            color: '00ffad'
+        },
+        6: {
+            name: 'Mamoka Migatte',
+            sprite: 'https://en.touhouwiki.net/images/d/d5/Th14Cirno.png',
+            links: {
+                telegram: {name: 'Mamoka Migatte TFT', url: 'https://t.me/mamokamigattearttg'},
+                vk: {name: 'Mamoka Migatte TFT', url: 'https://vk.com/mamoka_migatte_art'}
+            },
+            color: '00fff2'
+        },
+        5: {
+            name: 'klabisot',
+            sprite: 'https://en.touhouwiki.net/images/5/5e/Th15Doremy.png',
+            links: {
+                twitter: {name: 'Dreamy Lounge', url: 'https://twitter.com/Klabisot'},
+                pixiv: {name: 'Klabisot', url: 'https://www.pixiv.net/en/users/28984542'},
+            },
+            color: '004dff'
+        },
+        4: {
+            name: 'Aka-Mak',
+            sprite: 'https://en.touhouwiki.net/images/d/d9/Th105Iku.png',
+            links: {vk: {name: 'АкайМак', url: 'https://vk.com/club194747571'}},
+            color: '8a00ff'
+        },
+        3: {
+            name: 'Nerosik',
+            sprite: 'https://en.touhouwiki.net/images/0/00/Th11Satori.png',
+            links: {
+                twitter: {name: 'Nerosik', url: 'https://twitter.com/_Nerosik'},
+                instagram: {name: '_nerosik', url: 'https://www.instagram.com/_nerosik'}
+            },
+            color: 'ff00fc'
         }
+        // 11: {
+        //     name: 'name 11',
+        //     links: {twitter: {name: 'twitter name 11', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}},
+        //     color: 'f18e17'
+        // },
+        // 12: {
+        //     name: 'name 12',
+        //     links: {twitter: {name: 'twitter name 12', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}},
+        //     color: 'fdbf0c'
+        // }
     }
 
     const clickArea = document.getElementById('click-area');
+    const logo = document.getElementById('logo');
     const wheel = document.getElementById('wheel');
     const leftHalf = document.getElementById('left-half');
     const rightHalf = document.getElementById('right-half');
@@ -380,6 +484,7 @@
         $('#name').html(`<h1>${artists[1]['name']}</h1>`)
         rightHalf.style.backgroundColor = `#${artists[1]['color']}`
         bg.style.backgroundColor = `#${artists[1]['color']}`
+        $('#sprite').attr('src', artists[1]['sprite'])
 
         clearInnerHTML()
         for (const [key, value] of Object.entries(artists[1]['links'])) {
@@ -394,7 +499,7 @@
 
     var zoomed = false;
     var el, rot = 0;
-    const numberOfSectors = 12;
+    const numberOfSectors = 10;
 
     const scale = 1.4
 
@@ -405,11 +510,13 @@
             $('#click-area').addClass('zoomed')
             $('#zoom-icon').html('zoom_out')
             clickArea.style.transform = ("scale(" + scale + ") translateY(35%)");
+            logo.style.transform = ("scale(" + scale + ")");
         }
         else{
             $('#click-area').removeClass('zoomed')
             $('#zoom-icon').html('zoom_in')
             clickArea.style.transform = ("scale(1)");
+            logo.style.transform = ("scale(1)");
         }
 
         wheel.style.transform = ("rotate( " + rot + "deg )" + (zoomed ? " scale(" + scale + ")" : ""));
@@ -455,7 +562,7 @@
             imageRotationAngle += 360
         }
         // console.log(imageRotationAngle)
-        let newRotationAngle = imageRotationAngle - 30 * direction
+        let newRotationAngle = imageRotationAngle - (360/numberOfSectors) * direction
         rotateThis(newRotationAngle)
 
         var rotation = rot % 360
@@ -464,6 +571,7 @@
         $('#name').html(`<h1>${artists[index]['name']}</h1>`)
         rightHalf.style.backgroundColor = `#${artists[index]['color']}`
         bg.style.backgroundColor = `#${artists[index]['color']}`
+        $('#sprite').attr('src', artists[index]['sprite'])
 
         clearInnerHTML()
         for (const [key, value] of Object.entries(artists[index]['links'])) {
