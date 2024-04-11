@@ -860,7 +860,7 @@
             </button>
         </div>
         
-        <div class="full-image hidden" id="full-image">
+        <div class="full-image hidden-smooth" id="full-image">
             <img src="https://via.placeholder.com/300" />
         </div>
     </div>
@@ -1197,11 +1197,21 @@
     $(document).on('click', '.full', function (e) {
         fullVisible = !fullVisible
         
-        if (fullVisible){
-            $('.full-image').removeClass('hidden')
+        if (!fullVisible){
+            $('.full-image').addClass('hidden-smooth')
+            $('.full-image').removeClass('visible-smooth')
         }
         else{
-            $('.full-image').addClass('hidden')
+            $('.full-image').removeClass('hidden-smooth')
+            $('.full-image').addClass('visible-smooth')
+        }
+    });
+    $(document).on('click', '.full-image', function (e) {
+        fullVisible = !fullVisible
+        
+        if (!fullVisible){
+            $('.full-image').addClass('hidden-smooth')
+            $('.full-image').removeClass('visible-smooth')
         }
     });
 </script>
