@@ -199,7 +199,7 @@
         width: 35%;
         background-color: #f0f0f0; /* Фон правой половины страницы */
         transition: background-color 0.3s linear;
-        box-shadow: 0px 0px 10px black;
+        /* box-shadow: 0px 0px 10px black; */
         /* z-index: -1000; */
     }
     .right-half *{
@@ -218,7 +218,7 @@
         overflow-x: hidden;
 
         color: #fff;
-        box-shadow: 0px 0px 15px black;
+        /* box-shadow: 0px 0px 15px black; */
     }
     .artist-info a{
         display: block;
@@ -803,6 +803,47 @@
         0 0 10px    #812148;
     }
     
+    .kasen-shadow-here{
+        box-shadow:
+        0 0 10px    #781010;
+    }
+    .saki-shadow-here{
+        box-shadow:
+        0 0 10px    #99501e;
+    }
+    .suwako-shadow-here{
+        box-shadow:
+        0 0 10px    #9f890f;
+    }
+    .tojiko-shadow-here{
+        box-shadow:
+        0 0 10px    #29870e;
+    }
+    .seiga-shadow-here{
+        box-shadow:
+        0 0 10px    #157871;
+    }
+    .cirno-shadow-here{
+        box-shadow:
+        0 0 10px    #1a6f7e;
+    }
+    .doremy-shadow-here{
+        box-shadow:
+        0 0 10px    #1c2d75;
+    }
+    .iku-shadow-here{
+        box-shadow:
+        0 0 10px    #472d87;
+    }
+    .satori-shadow-here{
+        box-shadow:
+        0 0 10px    #753184;
+    }
+    .sekibanki-shadow-here{
+        box-shadow:
+        0 0 10px    #812148;
+    }
+    
 </style>
 </head>
 <body>
@@ -1046,6 +1087,8 @@
         var strokeColor = artists[1]['stroke']
         $('#char-name').addClass(artists[1]['stroke'])
         $('#icons').addClass(`${artists[1]['stroke']}-shadow`)
+        $('#right-half').addClass(`${artists[1]['stroke']}-shadow-here`)
+        $('.artist-info').addClass(`${artists[1]['stroke']}-shadow-here`)
 
         clearInnerHTML()
         for (const [key, value] of Object.entries(artists[1]['links'])) {
@@ -1171,6 +1214,28 @@
         $('#icons').removeClass('sekibanki-shadow')
         $('#icons').removeClass('tojiko-shadow')
         $('#icons').addClass(`${artists[index]['stroke']}-shadow`)
+        $('#right-half').removeClass('kasen-shadow-here')
+        $('#right-half').removeClass('saki-shadow-here')
+        $('#right-half').removeClass('suwako-shadow-here')
+        $('#right-half').removeClass('seiga-shadow-here')
+        $('#right-half').removeClass('cirno-shadow-here')
+        $('#right-half').removeClass('doremy-shadow-here')
+        $('#right-half').removeClass('iku-shadow-here')
+        $('#right-half').removeClass('satori-shadow-here')
+        $('#right-half').removeClass('sekibanki-shadow-here')
+        $('#right-half').removeClass('tojiko-shadow-here')
+        $('#right-half').addClass(`${artists[index]['stroke']}-shadow-here`)
+        $('.artist-info').removeClass('kasen-shadow-here')
+        $('.artist-info').removeClass('saki-shadow-here')
+        $('.artist-info').removeClass('suwako-shadow-here')
+        $('.artist-info').removeClass('seiga-shadow-here')
+        $('.artist-info').removeClass('cirno-shadow-here')
+        $('.artist-info').removeClass('doremy-shadow-here')
+        $('.artist-info').removeClass('iku-shadow-here')
+        $('.artist-info').removeClass('satori-shadow-here')
+        $('.artist-info').removeClass('sekibanki-shadow-here')
+        $('.artist-info').removeClass('tojiko-shadow-here')
+        $('.artist-info').addClass(`${artists[index]['stroke']}-shadow-here`)
 
         $('#char-name').html(`<h1>${artists[index]['charname']}</h1> <p>${artists[index]['title']}</p>`)
 
