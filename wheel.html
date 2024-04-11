@@ -28,8 +28,25 @@
         flex-wrap: wrap;
         height: 100vh;
     }
-    .left-half, .right-half{
+    .left-half, .right-half, .full-image{
         box-sizing: border-box;
+    }
+    .full-image{
+        width: 65%;
+        height: 100%;
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: background-color 0.3s linear;
+        background-color: rgb(0, 0, 0, .5);
+    }
+    .full-image img{
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: center;
+        pointer-events: none;
     }
     .left-half {
         width: 65%;
@@ -100,7 +117,7 @@
         height: 100%;
     }
 
-    .zoom, .prev, .next{
+    .zoom, .prev, .next, .full{
         width: 75px;
         height: 75px;
         transition: all 0.3s ease; 
@@ -110,7 +127,7 @@
         border-radius: 38px;
         cursor: pointer;
     }
-    .zoom, .prev, .next, #discord{
+    .zoom, .prev, .next, #discord, .full{
         color: white;
         /* -webkit-text-stroke: 1px gray; */
         /* text-shadow: 0px 2px 10px rgba(0,0,0,1); */
@@ -118,7 +135,7 @@
     .icon-size{
         font-size: 40px;
     }
-    .zoom:hover, .prev:hover, .next:hover{
+    .zoom:hover, .prev:hover, .next:hover, .full:hover{
         width: 75px;
         height: 75px;
         /* background-color: #ddd; */
@@ -128,9 +145,15 @@
         top: 0;
         right: 0;
     }
+    .full{
+        position: absolute;
+        top: 155px;
+        right: 2px;
+        z-index: 11;
+    }
     #discord{
         position: absolute;
-        right: 0;
+        right: 2px;
         top: 80px;
         font-size: 27px;
         width: 50px;
@@ -144,13 +167,14 @@
         /* color: black; */
         cursor: pointer;
     }
-    .zoom:hover, #discord:hover{
+    .zoom:hover, #discord:hover, .full:hover{
         transform: scale(1.2);
     }
     .prev{
         position: absolute;
         bottom: 0;
         left: 0;
+        z-index: 11;
     }
     .prev:hover{
         transform: rotate(45deg);
@@ -159,6 +183,7 @@
         position: absolute;
         bottom: 0;
         right: 0;
+        z-index: 11;
     }
     .next:hover{
         transform: rotate(-45deg);
@@ -239,10 +264,10 @@
         .container {
             flex-direction: column;
         }
-        .left-half, .right-half {
+        .left-half, .right-half, .full {
             width: 100%;
         }
-        .left-half {
+        .left-half, .full {
             height: 60%;
         }
         .right-half {
@@ -269,7 +294,7 @@
         z-index: 999;
 
         padding: 20px;
-        font-size: 20px;
+        font-size: 14px;
         color: white;
     }
     .tutorial i{
@@ -395,6 +420,7 @@
         text-shadow: 0px 2px 10px rgba(0,0,0,1);
         color: white;
         align-items: center;
+        z-index: 11;
         /* background: linear-gradient(to bottom, rgb(0, 0, 0, 0), rgb(0, 0, 0, .5), rgb(0, 0, 0, 0)); */
     }
     #char-name *{
@@ -780,6 +806,9 @@
             zoom_in
         </span></i><span class="text">Zoom in/out</span><br>
         <i><span class="material-symbols-outlined">
+            image
+        </span></i><span class="text">Open full sector image</span><br>
+        <i><span class="material-symbols-outlined">
             rotate_right
         </span></i><span class="text">Spin the wheel clockwise</span><br>
         <i><span class="material-symbols-outlined">
@@ -806,6 +835,12 @@
                 </span></i>
             </button>
             <div id="discord" class="fab fa-discord"></div>
+
+            <button class="full">
+                <i><span class="material-symbols-outlined icon-size" id="zoom-icon">
+                    image
+                </span></i>
+            </button>
             <button class="next">
                 <i><span class="material-symbols-outlined icon-size">
                     rotate_left
@@ -817,6 +852,10 @@
                 </span></i>
             </button>
         </div>
+    </div>
+
+    <div class="full-image hidden" id="full-image">
+        <img src="https://via.placeholder.com/300" />
     </div>
 
     <div id="discord-widget" class="hidden-smooth">
@@ -996,6 +1035,7 @@
         rightHalf.style.backgroundColor = `#${artists[1]['color']}`
         bg.style.backgroundColor = `#${artists[1]['color']}`
         $('#sprite').attr('src', artists[1]['sprite'])
+        $('#full-image img').attr('src', artists[1]['sprite'])
         var strokeColor = artists[1]['stroke']
         $('#char-name').addClass(artists[1]['stroke'])
         $('#icons').addClass(`${artists[1]['stroke']}-shadow`)
@@ -1005,7 +1045,7 @@
             $('#links').append(`<a href="${value['url']}" target="_blank"><i class='fab fa-${key}'></i>${value['name']}</a>`)
         }
 
-        if (getCookie('tutorialed') == 'True'){
+        if (getCookie('tutorialed2') == 'True'){
             $('.tutorial').addClass('hidden')
         }
 
@@ -1100,6 +1140,7 @@
         rightHalf.style.backgroundColor = `#${artists[index]['color']}`
         bg.style.backgroundColor = `#${artists[index]['color']}`
         $('#sprite').attr('src', artists[index]['sprite'])
+        $('#full-image img').attr('src', artists[index]['sprite'])
 
         $('#char-name').removeClass('kasen')
         $('#char-name').removeClass('saki')
@@ -1142,7 +1183,19 @@
 
     $(document).on('click', '.tutorial', function (e) {
         $('.tutorial').addClass('hidden-smooth')
-        document.cookie = "tutorialed=True";
+        document.cookie = "tutorialed2=True";
+    });
+
+    var fullVisible = false
+    $(document).on('click', '.full', function (e) {
+        fullVisible = !fullVisible
+        
+        if (fullVisible){
+            $('.full-image').removeClass('hidden')
+        }
+        else{
+            $('.full-image').addClass('hidden')
+        }
     });
 </script>
 </body>
