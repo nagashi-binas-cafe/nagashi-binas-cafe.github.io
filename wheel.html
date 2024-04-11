@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Squada+One&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <title>Крутящееся изображение с интерактивным поворотом</title>
 <style>
@@ -106,7 +106,8 @@
     }
     .zoom, .prev, .next, #discord{
         color: white;
-        -webkit-text-stroke: 1px gray;
+        /* -webkit-text-stroke: 1px gray; */
+        text-shadow: 0px 2px 10px rgba(0,0,0,1);
     }
     .icon-size{
         font-size: 40px;
@@ -165,6 +166,7 @@
         width: 35%;
         background-color: #f0f0f0; /* Фон правой половины страницы */
         transition: background-color 0.3s linear;
+        box-shadow: 0px 0px 10px black;
         /* z-index: -1000; */
     }
     .right-half *{
@@ -172,8 +174,10 @@
     }
 
     .artist-info{
+        /* border: 2px solid #303030; */
+
         position: relative;
-        background-color: rgb(0, 0, 0, .5);
+        background: linear-gradient(to right bottom, rgb(0, 0, 0, .3), rgb(0, 0, 0, .5));
         margin: 15px;
         border-radius: 5px;
         padding-bottom: 30px;
@@ -181,6 +185,7 @@
         overflow-x: hidden;
 
         color: #fff;
+        box-shadow: 0px 0px 15px black;
     }
     .artist-info a{
         display: block;
@@ -207,8 +212,16 @@
         z-index: 9999;
     }
     #name, #name h1{
+        position: relative;
         margin-bottom: 0;
         padding-bottom: 0;
+        z-index: 10;
+    }
+    #name h1{
+        font-family: "Squada One", cursive;
+        font-weight: 700;
+        font-style: normal;
+        font-size: 55px;
     }
     #aka {
         padding-top: 0;
@@ -216,7 +229,7 @@
         font-size: 12px;
         color: #aaa;
     }
-    @media (max-width: 767px) {
+    @media (max-width: 1200px) {
         .container {
             flex-direction: column;
         }
@@ -231,6 +244,7 @@
             overflow: scroll;
         }
         .artist-info{
+            min-height: calc(100% - 70px);
             height: auto;
         }
         #logo{
@@ -303,14 +317,14 @@
         right: 0;
         display: table-cell;
         vertical-align: bottom;
-        height: 80%;
+        height: 70%;
         width: auto;
         object-fit: contain;
         padding: 0;
         pointer-events: none;
         -webkit-mask-image: -webkit-gradient(linear, left top, right bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
     }
-    @media (max-width: 767px) {
+    @media (max-width: 1200px) {
         .artist-info img{
             bottom: 0;
             height: 100%;
@@ -344,6 +358,8 @@
         color: white;
         background-color: rgb(88, 101, 242);
         border-radius: 10px;
+
+        box-shadow: 0px 0px 10px rgb(63, 133, 121);
     }
 
     iframe{
@@ -357,11 +373,58 @@
         bottom: 0;
         right: 0;
 
+        box-shadow: 0px 0px 10px rgb(63, 133, 121);
     }
-    @media (max-width: 767px) {
+    @media (max-width: 1200px) {
         #discord-widget{
             height: 40%;
             width: 100%;
+        }
+    }
+
+    #char-name{
+        position: absolute;
+        width: 260px;
+        margin: 10px;
+        text-shadow: 0px 2px 10px rgba(0,0,0,1);
+        color: white;
+        align-items: center;
+    }
+    #char-name *{
+        text-align: center;
+        width: 100%;
+        text-shadow:
+        -1px -1px 0 gray,
+         0   -1px 0 gray,
+         1px -1px 0 gray,
+         1px  0   0 gray,
+         1px  1px 0 gray,
+         0    1px 0 gray,
+        -1px  1px 0 gray,
+        -1px  0   0 gray,
+        0px 2px 10px rgba(0,0,0,1);;
+
+    }
+    #char-name h1{
+        font-family: "Tangerine", cursive;
+        font-weight: bold;
+        font-style: normal;
+        font-size: 50px;
+    }
+    #char-name p{
+        margin: 0;
+        padding: 0;
+        font-family: "Montserrat";
+    }
+    @media (max-width: 1200px) {
+        #char-name{
+            width: 200px;
+        }
+        #char-name h1{
+            font-size: 30px;
+        }
+        #char-name p{
+            font-size: 12px;
         }
     }
 </style>
@@ -389,6 +452,10 @@
                 <img id="wheel" src="https://lh3.googleusercontent.com/d/1GFSDumrlYGryTuOhgqZwEB2_BhE6uhJQ" alt="Крутящееся изображение">
                 <img id="logo" src="https://lh3.googleusercontent.com/d/1JjgqnhYnpwr97w1uSl5-Lce_heplI-Fd" alt="Лого">
             </div>
+        </div>
+        <div id="char-name">
+            <h1>Kasen Ibaraki</h1>
+            <p>The One-Armed, Horned Hermit</p>
         </div>
         <button class="zoom">
             <i><span class="material-symbols-outlined icon-size" id="zoom-icon">
@@ -434,6 +501,8 @@
         2: {
             name: 'Borsh',
             sprite: 'https://en.touhouwiki.net/images/5/58/Th14Sekibanki.png',
+            charname: 'Sekibanki',
+            title: 'The Rokurokubi Horror',
             links: {
                 twitter: {name: 'YaVsralas', url: 'https://twitter.com/vsralas?t=nLUq-2M9UydX3CMEUats9Q&s=09'}
             },
@@ -442,6 +511,8 @@
         1: {
             name: 'IamSuicc',
             sprite: 'https://en.touhouwiki.net/images/f/ff/Th155Kasen.png',
+            charname: 'Kasen Ibaraki',
+            title: 'The One-Armed, Horned Hermit',
             links: {
                 vk: {name: 'reincarnationkages', url: 'https://vk.com/reincarnationkages'},
             },
@@ -450,6 +521,8 @@
         10: {
             name: 'Collectolider',
             sprite: 'https://en.touhouwiki.net/images/5/5b/Th19Saki.png',
+            charname: 'Saki Kurokoma',
+            title: 'Matriarch of the Keiga Family',
             links: {
                 twitter: {name: 'collidellector', url: 'https://twitter.com/collidellector'},
                 pixiv: {name: 'Collectollider', url: 'https://www.pixiv.net/en/users/8515429'},
@@ -459,6 +532,8 @@
         9: {
             name: 'KateDragna',
             sprite: 'https://en.touhouwiki.net/images/9/9a/Th10Suwako.png',
+            charname: 'Suwako Moriya',
+            title: 'The Highest of Indigenous Gods',
             links: {
                 twitter: {name: 'KateDragna', url: 'https://twitter.com/kate_dragna'},
                 vk: {name: 'KateDragna', url: 'https://vk.com/kate_dragna'},
@@ -468,18 +543,24 @@
         8: {
             name: 'shiratori',
             sprite: 'https://en.touhouwiki.net/images/0/07/Th13Tojiko.png',
+            charname: 'Soga no Tojiko',
+            title: 'Ghost of the Descendant of the Gods',
             links: {twitter: {name: 'shiratori-p', url: 'https://twitter.com/sAshiratori'}},
             color: '00ff06'
         },
         7: {
             name: 'Dungeon Toaster',
             sprite: 'https://en.touhouwiki.net/images/b/b0/Th13Seiga.png',
+            charname: 'Seiga Kaku',
+            title: 'The Wicked Hermit Who Passes Through Walls',
             links: {twitter: {name: 'Dungeon Toaster', url: 'https://twitter.com/OrdinaryRizzych'}},
             color: '00ffad'
         },
         6: {
             name: 'Mamoka Migatte',
             sprite: 'https://en.touhouwiki.net/images/d/d5/Th14Cirno.png',
+            charname: 'Cirno',
+            title: 'Fairy of the Ice',
             links: {
                 telegram: {name: 'Mamoka Migatte TFT', url: 'https://t.me/mamokamigattearttg'},
                 vk: {name: 'Mamoka Migatte TFT', url: 'https://vk.com/mamoka_migatte_art'}
@@ -489,6 +570,8 @@
         5: {
             name: 'klabisot',
             sprite: 'https://en.touhouwiki.net/images/5/5e/Th15Doremy.png',
+            charname: 'Doremy Sweet',
+            title: 'Ruler of Dreams',
             links: {
                 twitter: {name: 'Dreamy Lounge', url: 'https://twitter.com/Klabisot'},
                 pixiv: {name: 'Klabisot', url: 'https://www.pixiv.net/en/users/28984542'},
@@ -498,12 +581,16 @@
         4: {
             name: 'Aka-Mak',
             sprite: 'https://en.touhouwiki.net/images/d/d9/Th105Iku.png',
+            charname: 'Iku Nagae',
+            title: 'Beautiful Scarlet Cloth',
             links: {vk: {name: 'АкайМак', url: 'https://vk.com/club194747571'}},
             color: '8a00ff'
         },
         3: {
             name: 'Nerosik',
             sprite: 'https://en.touhouwiki.net/images/0/00/Th11Satori.png',
+            charname: 'Satori Komeiji',
+            title: 'The Girl Even the Vengeful Spirits Fear',
             links: {
                 twitter: {name: 'Nerosik', url: 'https://twitter.com/_Nerosik'},
                 instagram: {name: '_nerosik', url: 'https://www.instagram.com/_nerosik'}
@@ -656,6 +743,8 @@
         rightHalf.style.backgroundColor = `#${artists[index]['color']}`
         bg.style.backgroundColor = `#${artists[index]['color']}`
         $('#sprite').attr('src', artists[index]['sprite'])
+
+        $('#char-name').html(`<h1>${artists[index]['charname']}</h1> <p>${artists[index]['title']}</p>`)
 
         clearInnerHTML()
         for (const [key, value] of Object.entries(artists[index]['links'])) {
