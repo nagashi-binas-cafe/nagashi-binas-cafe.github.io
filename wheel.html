@@ -153,7 +153,7 @@
         left: 0;
     }
     .prev:hover{
-        transform: rotate(60deg);
+        transform: rotate(45deg);
     }
     .next{
         position: absolute;
@@ -161,7 +161,7 @@
         right: 0;
     }
     .next:hover{
-        transform: rotate(-60deg);
+        transform: rotate(-45deg);
     }
     #discord:visited, #discord:link, #discord:hover{
         color: rgb(88, 101, 242);
@@ -395,20 +395,24 @@
         text-shadow: 0px 2px 10px rgba(0,0,0,1);
         color: white;
         align-items: center;
+        /* background: linear-gradient(to bottom, rgb(0, 0, 0, 0), rgb(0, 0, 0, .5), rgb(0, 0, 0, 0)); */
     }
     #char-name *{
         text-align: center;
         width: 100%;
-        text-shadow:
-        -1px -1px 0 gray,
-         0   -1px 0 gray,
-         1px -1px 0 gray,
-         1px  0   0 gray,
-         1px  1px 0 gray,
-         0    1px 0 gray,
-        -1px  1px 0 gray,
-        -1px  0   0 gray,
-        0px 2px 10px rgba(0,0,0,1);;
+        transition: text-shadow 0.3 ease;
+        /* text-shadow:
+        -1px -1px 0 black,
+         0   -1px 0 black,
+         1px -1px 0 black,
+         1px  0   0 black,
+         1px  1px 0 black,
+         0    1px 0 black,
+        -1px  1px 0 black,
+        -1px  0   0 black,
+        0 0 10px black,
+        0 0 10px black,
+        0 0 10px black; */
 
     }
     #char-name h1{
@@ -432,6 +436,147 @@
         #char-name p{
             font-size: 12px;
         }
+    }
+
+    .kasen *{
+        text-shadow:
+        -1px -1px 0 #781010,
+         0   -1px 0 #781010,
+         1px -1px 0 #781010,
+         1px  0   0 #781010,
+         1px  1px 0 #781010,
+         0    1px 0 #781010,
+        -1px  1px 0 #781010,
+        -1px  0   0 #781010,
+        0 0 10px    #781010,
+        0 0 10px    #781010,
+        0 0 10px    #781010;
+    }
+    .saki *{
+        text-shadow:
+        -1px -1px 0 #99501e,
+         0   -1px 0 #99501e,
+         1px -1px 0 #99501e,
+         1px  0   0 #99501e,
+         1px  1px 0 #99501e,
+         0    1px 0 #99501e,
+        -1px  1px 0 #99501e,
+        -1px  0   0 #99501e,
+        0 0 10px    #99501e,
+        0 0 10px    #99501e,
+        0 0 10px    #99501e;
+    }
+    .suwako *{
+        text-shadow:
+        -1px -1px 0 #d89109,
+         0   -1px 0 #d89109,
+         1px -1px 0 #d89109,
+         1px  0   0 #d89109,
+         1px  1px 0 #d89109,
+         0    1px 0 #d89109,
+        -1px  1px 0 #d89109,
+        -1px  0   0 #d89109,
+        0 0 10px    #d89109,
+        0 0 10px    #d89109,
+        0 0 10px    #d89109;
+    }
+    .tojiko *{
+        text-shadow:
+        -1px -1px 0 #29870e,
+         0   -1px 0 #29870e,
+         1px -1px 0 #29870e,
+         1px  0   0 #29870e,
+         1px  1px 0 #29870e,
+         0    1px 0 #29870e,
+        -1px  1px 0 #29870e,
+        -1px  0   0 #29870e,
+        0 0 10px    #29870e,
+        0 0 10px    #29870e,
+        0 0 10px    #29870e;
+    }
+    .seiga *{
+        text-shadow:
+        -1px -1px 0 #157871,
+         0   -1px 0 #157871,
+         1px -1px 0 #157871,
+         1px  0   0 #157871,
+         1px  1px 0 #157871,
+         0    1px 0 #157871,
+        -1px  1px 0 #157871,
+        -1px  0   0 #157871,
+        0 0 10px    #157871,
+        0 0 10px    #157871,
+        0 0 10px    #157871;
+    }
+    .cirno *{
+        text-shadow:
+        -1px -1px 0 #1a6f7e,
+         0   -1px 0 #1a6f7e,
+         1px -1px 0 #1a6f7e,
+         1px  0   0 #1a6f7e,
+         1px  1px 0 #1a6f7e,
+         0    1px 0 #1a6f7e,
+        -1px  1px 0 #1a6f7e,
+        -1px  0   0 #1a6f7e,
+        0 0 10px    #1a6f7e,
+        0 0 10px    #1a6f7e,
+        0 0 10px    #1a6f7e;
+    }
+    .doremy *{
+        text-shadow:
+        -1px -1px 0 #1c2d75,
+         0   -1px 0 #1c2d75,
+         1px -1px 0 #1c2d75,
+         1px  0   0 #1c2d75,
+         1px  1px 0 #1c2d75,
+         0    1px 0 #1c2d75,
+        -1px  1px 0 #1c2d75,
+        -1px  0   0 #1c2d75,
+        0 0 10px    #1c2d75,
+        0 0 10px    #1c2d75,
+        0 0 10px    #1c2d75;
+    }
+    .iku *{
+        text-shadow:
+        -1px -1px 0 #472d87,
+         0   -1px 0 #472d87,
+         1px -1px 0 #472d87,
+         1px  0   0 #472d87,
+         1px  1px 0 #472d87,
+         0    1px 0 #472d87,
+        -1px  1px 0 #472d87,
+        -1px  0   0 #472d87,
+        0 0 10px    #472d87,
+        0 0 10px    #472d87,
+        0 0 10px    #472d87;
+    }
+    .satori *{
+        text-shadow:
+        -1px -1px 0 #753184,
+         0   -1px 0 #753184,
+         1px -1px 0 #753184,
+         1px  0   0 #753184,
+         1px  1px 0 #753184,
+         0    1px 0 #753184,
+        -1px  1px 0 #753184,
+        -1px  0   0 #753184,
+        0 0 10px    #753184,
+        0 0 10px    #753184,
+        0 0 10px    #753184;
+    }
+    .sekibanki *{
+        text-shadow:
+        -1px -1px 0 812148,
+         0   -1px 0 812148,
+         1px -1px 0 812148,
+         1px  0   0 812148,
+         1px  1px 0 812148,
+         0    1px 0 812148,
+        -1px  1px 0 812148,
+        -1px  0   0 812148,
+        0 0 10px    812148,
+        0 0 10px    812148,
+        0 0 10px    812148;
     }
 </style>
 </head>
@@ -459,8 +604,8 @@
             </div>
         </div>
         <div id="char-name">
-            <h1>Kasen Ibaraki</h1>
-            <p>The One-Armed, Horned Hermit</p>
+            <h1 id="stroking-name">Kasen Ibaraki</h1>
+            <p  id="stroking-title">The One-Armed, Horned Hermit</p>
         </div>
         <button class="zoom">
             <i><span class="material-symbols-outlined icon-size" id="zoom-icon">
@@ -511,7 +656,8 @@
             links: {
                 twitter: {name: 'YaVsralas', url: 'https://twitter.com/vsralas?t=nLUq-2M9UydX3CMEUats9Q&s=09'}
             },
-            color: 'ff0086'
+            color: 'ff0086',
+            stroke: 'sekibanki'
         },
         1: {
             name: 'IamSuicc',
@@ -521,7 +667,8 @@
             links: {
                 vk: {name: 'reincarnationkages', url: 'https://vk.com/reincarnationkages'},
             },
-            color: 'ff0000' 
+            color: 'ff0000',
+            stroke: 'kasen'
         },
         10: {
             name: 'Collectolider',
@@ -532,7 +679,8 @@
                 twitter: {name: 'collidellector', url: 'https://twitter.com/collidellector'},
                 pixiv: {name: 'Collectollider', url: 'https://www.pixiv.net/en/users/8515429'},
             },
-            color: 'ffa300'
+            color: 'ffa300',
+            stroke: 'saki'
         },
         9: {
             name: 'KateDragna',
@@ -543,7 +691,8 @@
                 twitter: {name: 'KateDragna', url: 'https://twitter.com/kate_dragna'},
                 vk: {name: 'KateDragna', url: 'https://vk.com/kate_dragna'},
             },
-            color: 'ffe900'
+            color: 'ffe900',
+            stroke: 'suwako'
         },
         8: {
             name: 'shiratori',
@@ -551,7 +700,8 @@
             charname: 'Soga no Tojiko',
             title: 'Ghost of the Descendant of the Gods',
             links: {twitter: {name: 'shiratori-p', url: 'https://twitter.com/sAshiratori'}},
-            color: '00ff06'
+            color: '00ff06',
+            stroke: 'tojiko'
         },
         7: {
             name: 'Dungeon Toaster',
@@ -559,7 +709,8 @@
             charname: 'Seiga Kaku',
             title: 'The Wicked Hermit Who Passes Through Walls',
             links: {twitter: {name: 'Dungeon Toaster', url: 'https://twitter.com/OrdinaryRizzych'}},
-            color: '00ffad'
+            color: '00ffad',
+            stroke: 'seiga'
         },
         6: {
             name: 'Mamoka Migatte',
@@ -570,7 +721,8 @@
                 telegram: {name: 'Mamoka Migatte TFT', url: 'https://t.me/mamokamigattearttg'},
                 vk: {name: 'Mamoka Migatte TFT', url: 'https://vk.com/mamoka_migatte_art'}
             },
-            color: '00fff2'
+            color: '00fff2',
+            stroke: 'cirno'
         },
         5: {
             name: 'klabisot',
@@ -581,7 +733,8 @@
                 twitter: {name: 'Dreamy Lounge', url: 'https://twitter.com/Klabisot'},
                 pixiv: {name: 'Klabisot', url: 'https://www.pixiv.net/en/users/28984542'},
             },
-            color: '004dff'
+            color: '004dff',
+            stroke: 'doremy'
         },
         4: {
             name: 'Aka-Mak',
@@ -589,7 +742,8 @@
             charname: 'Iku Nagae',
             title: 'Beautiful Scarlet Cloth',
             links: {vk: {name: 'АкайМак', url: 'https://vk.com/club194747571'}},
-            color: '8a00ff'
+            color: '8a00ff',
+            stroke: 'iku'
         },
         3: {
             name: 'Nerosik',
@@ -600,7 +754,8 @@
                 twitter: {name: 'Nerosik', url: 'https://twitter.com/_Nerosik'},
                 instagram: {name: '_nerosik', url: 'https://www.instagram.com/_nerosik'}
             },
-            color: 'ff00fc'
+            color: 'ff00fc',
+            stroke: 'satori'
         }
         // 11: {
         //     name: 'name 11',
@@ -647,6 +802,8 @@
         rightHalf.style.backgroundColor = `#${artists[1]['color']}`
         bg.style.backgroundColor = `#${artists[1]['color']}`
         $('#sprite').attr('src', artists[1]['sprite'])
+        var strokeColor = artists[1]['stroke']
+        $('#char-name').addClass(artists[1]['stroke'])
 
         clearInnerHTML()
         for (const [key, value] of Object.entries(artists[1]['links'])) {
@@ -748,6 +905,18 @@
         rightHalf.style.backgroundColor = `#${artists[index]['color']}`
         bg.style.backgroundColor = `#${artists[index]['color']}`
         $('#sprite').attr('src', artists[index]['sprite'])
+
+        $('#char-name').removeClass('kasen')
+        $('#char-name').removeClass('saki')
+        $('#char-name').removeClass('suwako')
+        $('#char-name').removeClass('seiga')
+        $('#char-name').removeClass('cirno')
+        $('#char-name').removeClass('doremy')
+        $('#char-name').removeClass('iku')
+        $('#char-name').removeClass('satori')
+        $('#char-name').removeClass('sekibanki')
+        $('#char-name').removeClass('tojiko')
+        $('#char-name').addClass(artists[index]['stroke'])
 
         $('#char-name').html(`<h1>${artists[index]['charname']}</h1> <p>${artists[index]['title']}</p>`)
 
