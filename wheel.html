@@ -349,7 +349,7 @@
     .tutorial span.text{
         font-family: "Montserrat", sans-serif;
     }
-    .click-anywhere{
+    .tutorial-header{
         display: block;
         padding-left: 55px;
         margin-top: 5px;
@@ -933,7 +933,7 @@
             </span></i><span class="text">Zoom in/out</span><br>
             <i><span class="material-symbols-outlined">
                 image
-            </span></i><span class="text">Open full sector image</span><br>
+            </span></i><span class="text">Open/close full sector image</span><br>
             <i><span class="material-symbols-outlined">
                 rotate_right
             </span></i><span class="text">Spin the wheel clockwise</span><br>
@@ -943,7 +943,22 @@
             <i><span class="material-symbols-outlined">
                 info
             </span></i><span class="text">Open this tutorial</span><br>
-            <span class="click-anywhere text">Click anywhere to continue...</span>
+            
+            <span class="tutorial-header text">Using keyboard:</span>
+            <i><span class="material-symbols-outlined">
+                arrow_back
+            </span></i>
+            <i><span class="material-symbols-outlined">
+                arrow_forward
+            </span></i><span class="text">Spin the wheel</span><br>
+            <i><span class="material-symbols-outlined">
+                arrow_upward
+            </span></i><span class="text">Open/close full sector image</span><br>
+            <i><span class="material-symbols-outlined">
+                arrow_downward
+            </span></i><span class="text">Zoom in/out</span><br>
+
+            <span class="tutorial-header text">Click anywhere to continue...</span>
             <div class="authors">collab curator - <u>Collectollider</u><br>website made by <u>klabisot</u>, with help from <u>KateDragna</u> and <u>Collectollider</u></div>
         </div>
     </div>
@@ -1314,7 +1329,7 @@
 
     const scale = 1.4
 
-    $(document).on('click', '.zoom', function (e) {
+    function zoom(){
         zoomed = !zoomed
 
         if (zoomed){
@@ -1331,6 +1346,10 @@
         }
 
         wheel.style.transform = ("rotate( " + rot + "deg )" + (zoomed ? " scale(" + scale + ")" : ""));
+    }
+
+    $(document).on('click', '.zoom', function (e) {
+        zoom()
     });
     $(document).on('click', '#discord', function (e) {
         visibleVidget = !visibleVidget
@@ -1464,7 +1483,7 @@
         document.cookie = "tutorialed4=True";
     });
 
-    $(document).on('click', '.full', function (e) {
+    function full(){
         fullVisible = !fullVisible
         
         if (!fullVisible){
@@ -1475,6 +1494,10 @@
             $('.full-image').removeClass('hidden-smooth')
             $('.full-image').addClass('visible-smooth')
         }
+    }
+
+    $(document).on('click', '.full', function (e) {
+        full()
     });
     $(document).on('click', '.info', function (e) {
         tutorialVisible = true
@@ -1490,6 +1513,29 @@
             $('.full-image').removeClass('visible-smooth')
         }
     });
+
+    document.onkeydown = function(e) {
+        switch(e.which) {
+            case 37: // left
+            clickedButton(-1)
+            break;
+
+            case 38: // up
+            full()
+            break;
+
+            case 39: // right
+            clickedButton(1)
+            break;
+
+            case 40: // down
+            zoom()
+            break;
+
+            default: return; // exit this handler for other keys
+        }
+        e.preventDefault(); // prevent the default action (scroll / move caret)
+    };
 </script>
 </body>
 </html>
