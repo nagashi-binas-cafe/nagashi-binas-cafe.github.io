@@ -1282,7 +1282,7 @@
             $('.image-loader').append(`<img src="${value['sprite']}" />`)
         }
 
-        if (getCookie('tutorialed3') == 'True'){
+        if (getCookie('tutorialed4') == 'True'){
             $('.tutorial').addClass('hidden')
             $('.tutorial').addClass('hidden-smooth')
         }
@@ -1444,7 +1444,7 @@
     $(document).on('click', '.tutorial', function (e) {
         $('.tutorial').addClass('hidden-smooth')
         tutorialVisible = false
-        document.cookie = "tutorialed3=True";
+        document.cookie = "tutorialed4=True";
     });
 
     $(document).on('click', '.full', function (e) {
