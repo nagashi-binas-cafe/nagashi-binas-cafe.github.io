@@ -122,7 +122,7 @@
         height: 100%;
     }
 
-    .zoom, .prev, .next, .full{
+    .zoom, .prev, .next, .full, .info{
         width: 75px;
         height: 75px;
         transition: all 0.3s ease; 
@@ -132,7 +132,7 @@
         border-radius: 38px;
         cursor: pointer;
     }
-    .zoom, .prev, .next, #discord, .full{
+    .zoom, .prev, .next, #discord, .full, .info{
         color: white;
         /* -webkit-text-stroke: 1px gray; */
         /* text-shadow: 0px 2px 10px rgba(0,0,0,1); */
@@ -140,7 +140,7 @@
     .icon-size{
         font-size: 40px;
     }
-    .zoom:hover, .prev:hover, .next:hover, .full:hover{
+    .zoom:hover, .prev:hover, .next:hover, .full:hover, .info:hover{
         width: 75px;
         height: 75px;
         /* background-color: #ddd; */
@@ -172,7 +172,12 @@
         /* color: black; */
         cursor: pointer;
     }
-    .zoom:hover, #discord:hover, .full:hover{
+    .info{
+        position: absolute;
+        top: 250px;
+        right: 2px;
+    }
+    .zoom:hover, #discord:hover, .full:hover, .info:hover{
         transform: scale(1.2);
     }
     .prev{
@@ -298,12 +303,25 @@
         left: 0;
         width: calc(100% - 40px);
         height: calc(100% - 40px);
-        background-color: rgb(0, 0, 0, .8);
+        background-color: rgb(0, 0, 0, .95);
         z-index: 999;
 
         padding: 20px;
         font-size: 14px;
         color: white;
+    }
+    .tutorial-container{
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+    .authors{
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        padding: 10px;
+        font-family: "Montserrat", sans-serif;
+        text-align: right;
     }
     .tutorial i{
         width: 40px;
@@ -458,7 +476,7 @@
     #char-name p{
         margin: 0;
         padding: 0;
-        font-family: "Montserrat";
+        font-family: "Montserrat", sans-serif;
     }
     @media (max-width: 1200px) {
         #char-name{
@@ -846,6 +864,37 @@
         box-shadow:
         0 0 10px    #812148;
     }
+
+    .marquee {
+        position: absolute;
+        top: -100px;
+        left: -50px;
+        white-space: nowrap;
+        
+        font-family: "Montserrat", sans-serif;
+        font-size: 50px;
+        font-weight: bold;
+        color: white;
+    }
+    .marquee>div{
+        margin: 100px 0;
+    }
+    .marquee>div>div{
+        display: inline-block;
+        animation: marquee 8s linear infinite;
+        transform: rotate(45deg);
+    }
+
+    @keyframes marquee {
+        0% { left: -100%; } /* Начальная позиция справа за пределами контейнера */
+        100% { left: 100%; } /* Конечная позиция слева за пределами контейнера */
+    }
+    @media (max-width: 1200px) {
+        .marquee {
+            transition: none;
+            font-size: 25px;
+        }
+    }
     
 </style>
 </head>
@@ -853,23 +902,79 @@
 <div class="container">
 
     <div class="tutorial">
-        <h1>Before you go...</h1>
-        <i><span class="material-symbols-outlined">
-            zoom_in
-        </span></i><span class="text">Zoom in/out</span><br>
-        <i><span class="material-symbols-outlined">
-            image
-        </span></i><span class="text">Open full sector image</span><br>
-        <i><span class="material-symbols-outlined">
-            rotate_right
-        </span></i><span class="text">Spin the wheel clockwise</span><br>
-        <i><span class="material-symbols-outlined">
-            rotate_left
-        </span></i><span class="text">Spin the wheel counterclockwise</span><br>
+        <div class="tutorial-container">
+            <h1>Before you go...</h1>
+            <i><span class="material-symbols-outlined">
+                zoom_in
+            </span></i><span class="text">Zoom in/out</span><br>
+            <i><span class="material-symbols-outlined">
+                image
+            </span></i><span class="text">Open full sector image</span><br>
+            <i><span class="material-symbols-outlined">
+                rotate_right
+            </span></i><span class="text">Spin the wheel clockwise</span><br>
+            <i><span class="material-symbols-outlined">
+                rotate_left
+            </span></i><span class="text">Spin the wheel counterclockwise</span><br>
+            <div class="authors">collab curator - Collectollider<br>website made by klabisot, with help from KateDragna and Collectollider</div>
+        </div>
     </div>
     <div class="left-half" id="left-half">
         <div id="background"></div>
-        <div id="background-gradient"></div>
+        <div id="background-gradient">
+            <div class="marquee">
+                <div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                </div>
+                <div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                </div>
+                <div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                </div>
+                <div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                </div>
+                <div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                </div>
+            </div>
+        </div>
         <div id="click-area">
             <div class="inner-img-container">
                 <img id="wheel" src="https://lh3.googleusercontent.com/d/1GFSDumrlYGryTuOhgqZwEB2_BhE6uhJQ" alt="Крутящееся изображение">
@@ -887,12 +992,17 @@
                 </span></i>
             </button>
             <div id="discord" class="fab fa-discord"></div>
-
             <button class="full">
                 <i><span class="material-symbols-outlined icon-size" id="zoom-icon">
                     image
                 </span></i>
             </button>
+            <button class="info">
+                <i><span class="material-symbols-outlined icon-size" id="zoom-icon">
+                    info
+                </span></i>
+            </button>
+
             <button class="next">
                 <i><span class="material-symbols-outlined icon-size">
                     rotate_left
@@ -1081,6 +1191,11 @@
         return "";
     }
 
+    var zoomed = false;
+    var visibleVidget = false;
+    var fullVisible = false;
+    var tutorialVisible = false;
+
     $( document ).ready(function() {
 
         $('#name').html(`<h1>${artists[1]['name']}</h1>`)
@@ -1099,14 +1214,15 @@
             $('#links').append(`<a href="${value['url']}" target="_blank"><i class='fab fa-${key}'></i>${value['name']}</a>`)
         }
 
-        if (getCookie('tutorialed2') == 'True'){
+        if (getCookie('tutorialed3') == 'True'){
             $('.tutorial').addClass('hidden')
+        }
+        else{
+            tutorialVisible = true
         }
 
     });
 
-    var zoomed = false;
-    var visibleVidget = false;
     var el, rot = 0;
     const numberOfSectors = 10;
 
@@ -1258,10 +1374,10 @@
 
     $(document).on('click', '.tutorial', function (e) {
         $('.tutorial').addClass('hidden-smooth')
-        document.cookie = "tutorialed2=True";
+        tutorialVisible = false
+        document.cookie = "tutorialed3=True";
     });
 
-    var fullVisible = false
     $(document).on('click', '.full', function (e) {
         fullVisible = !fullVisible
         
@@ -1273,6 +1389,11 @@
             $('.full-image').removeClass('hidden-smooth')
             $('.full-image').addClass('visible-smooth')
         }
+    });
+    $(document).on('click', '.info', function (e) {
+        tutorialVisible = true
+        
+        $('.tutorial').removeClass('hidden-smooth')
     });
     $(document).on('click', '.full-image', function (e) {
         fullVisible = !fullVisible
