@@ -961,6 +961,20 @@
                 arrow_downward
             </span></i><span class="text">Zoom in/out</span><br>
 
+            <span class="tutorial-header text">Using swipes (mobile devices):</span>
+            <i><span class="material-symbols-outlined">
+                arrow_back
+            </span></i>
+            <i><span class="material-symbols-outlined" id="arrow-forward">
+                arrow_forward
+            </span></i>
+            <i><span class="material-symbols-outlined" id="arrow-forward">
+                arrow_upward
+            </span></i>
+            <i><span class="material-symbols-outlined" id="arrow-forward">
+                arrow_downward
+            </span></i><span class="text">Spin the wheel</span><br>
+
             <span class="tutorial-header text">Click anywhere to continue...</span>
             <div class="authors">collab curator - <u>Collectollider</u><br>website made by <u>klabisot</u>, with help from <u>KateDragna</u> and <u>Collectollider</u></div>
         </div>
@@ -1296,7 +1310,72 @@
     var fullVisible = false;
     var tutorialVisible = false;
 
-    $( document ).ready(function() {
+    $( document ).ready(function(event) {
+
+        // ========================== SWIPES ==================================
+        // ========================== SWIPES ==================================
+        // ========================== SWIPES ==================================
+        var touchstartX = 0;
+        var touchendX = 0;
+        var touchstartY = 0;
+        var touchendY = 0;
+
+        var elementOffset = 0
+        var elementX =      0
+        var elementY =      0
+        var elementWidth = 0
+        var elementHeight = 0
+
+        // Обработка события начала касания
+        $("#click-area, #right-half, #full-image").on('touchstart', function(event) {
+            touchstartX = event.originalEvent.touches[0].pageX;
+            touchstartY = event.originalEvent.touches[0].pageY;
+        });
+
+        // Обработка события завершения касания
+        $("#click-area, #right-half, #full-image").on('touchend', function(event) {
+            touchendX = event.originalEvent.changedTouches[0].pageX;
+            touchendY = event.originalEvent.changedTouches[0].pageY;
+
+            elementY = event.originalEvent.changedTouches[0].pageY - $('#click-area').offset().top;
+            elementHeight = $('#click-area').height();
+            elementX = event.originalEvent.changedTouches[0].pageX - $('#click-area').offset().left;
+            elementWidth = $('#click-area').width();
+            handleGesture($(this)[0].id == 'click-area', $(this)[0].id == 'right-half');
+        });
+
+        // Обработка свайпов
+        function handleGesture(isWheelTap, isArtistInfoTap) {
+            if (Math.abs(touchendX - touchstartX) < Math.abs(touchstartY - touchendY) && $("#full-image").hasClass("hidden-smooth") && isWheelTap){
+                
+                var leftPart = elementX < elementWidth/2
+
+                if (touchendY < touchstartY) {
+                    clickedButton(1 * leftPart ? -1 : 1)
+                }
+
+                if (touchendY > touchstartY) {
+                    clickedButton(-1 * leftPart ? 1 : -1)
+                }
+            }else{
+                if (Math.abs(touchendX - touchstartX) < Math.abs(touchstartY - touchendY)){
+                    return
+                }
+
+                var lowerPart = elementY < elementHeight/2 
+
+                if (touchendX < touchstartX) {
+                    clickedButton(1 * lowerPart ? 1 : -1 * isArtistInfoTap ? 1 : -1)
+                }
+
+                if (touchendX > touchstartX) {
+                    clickedButton(-1 * lowerPart ? -1 : 1 * isArtistInfoTap ? -1 : 1)
+                }
+            }
+        }
+        // ========================== SWIPES ==================================
+        // ========================== SWIPES ==================================
+        // ========================== SWIPES ==================================
 
         $('#name').html(`<h1>${artists[1]['name']}</h1>`)
         rightHalf.style.backgroundColor = `#${artists[1]['color']}`
@@ -1317,7 +1396,7 @@
             $('.image-loader').append(`<img src="${value['sprite']}" />`)
         }
 
-        if (getCookie('tutorialed5') == 'True'){
+        if (getCookie('tutorialed6') == 'True'){
             $('.tutorial').addClass('hidden')
             $('.tutorial').addClass('hidden-smooth')
         }
@@ -1483,7 +1562,7 @@
     $(document).on('click', '.tutorial', function (e) {
         $('.tutorial').addClass('hidden-smooth')
         tutorialVisible = false
-        document.cookie = "tutorialed5=True";
+        document.cookie = "tutorialed6=True";
     });
 
     function full(){
