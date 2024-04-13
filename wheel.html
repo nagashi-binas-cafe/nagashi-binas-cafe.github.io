@@ -42,7 +42,7 @@
         top: 0;
         left: 0;
         transition: background-color 0.3s linear;
-        background-color: rgb(0, 0, 0, .5);
+        background-color: rgb(0, 0, 0, .8);
     }
     .full-image img{
         position: absolute;
@@ -57,6 +57,7 @@
         width: 65%;
         overflow: hidden;
         position: relative;
+        background-color: white;
         transition: background-color 0.3s linear;
     }
     #background, #background-gradient{
@@ -895,6 +896,14 @@
             font-size: 25px;
         }
     }
+
+    .image-loader, .image-loader *{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 10px;
+        height: 10px;
+    }
     
 </style>
 </head>
@@ -923,6 +932,56 @@
         <div id="background"></div>
         <div id="background-gradient">
             <div class="marquee">
+                <div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                </div>
+                <div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                </div>
+                <div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                </div>
+                <div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                </div>
+                <div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                </div>
                 <div>
                     <div>RAINBOW COLLAB</div>
                     <div>RAINBOW COLLAB</div>
@@ -1038,6 +1097,10 @@
             </div>
         </div>
         <!-- Здесь может быть контент для правой половины страницы -->
+    </div>
+
+    <div class="image-loader" style="position: absolute; z-index: -99999;">
+
     </div>
 </div>
 
@@ -1212,6 +1275,9 @@
         clearInnerHTML()
         for (const [key, value] of Object.entries(artists[1]['links'])) {
             $('#links').append(`<a href="${value['url']}" target="_blank"><i class='fab fa-${key}'></i>${value['name']}</a>`)
+        }
+        for (const [key, value] of Object.entries(artists)) {
+            $('.image-loader').append(`<img src="${value['sprite']}" />`)
         }
 
         if (getCookie('tutorialed3') == 'True'){
