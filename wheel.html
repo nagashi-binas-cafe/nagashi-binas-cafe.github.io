@@ -1556,25 +1556,29 @@
             else{
                 $('.inner-img-container').css('transform', 'rotate(-90deg)')
             }
+            $('#logo').css('transform', 'rotate(90deg)')
         }
         else if (index == 7 && !rotationLocked){
             if (zoomed){
-                $('.inner-img-container').css('transform', 'translateX(-25%) translateY(-25%) rotate(72deg)')
+                $('.inner-img-container').css('transform', 'translateX(-25%) translateY(-22%) rotate(72deg)')
             }
             else{
                 $('.inner-img-container').css('transform', 'rotate(72deg)')
             }
+            $('#logo').css('transform', 'rotate(-72deg)')
         }
         else if (index == 9 && !rotationLocked){
             if (zoomed){
-                $('.inner-img-container').css('transform', 'translateX(-25%) translateY(-35%) rotate(72deg)')
+                $('.inner-img-container').css('transform', 'translateX(-25%) translateY(-22%) rotate(72deg)')
             }
             else{
                 $('.inner-img-container').css('transform', 'rotate(72deg)')
             }
+            $('#logo').css('transform', 'rotate(-72deg)')
         }
         else{
             $('.inner-img-container').css('transform', '')
+            $('#logo').css('transform', '')
         }
     }
 
