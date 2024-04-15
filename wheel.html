@@ -148,11 +148,6 @@
     .icon-size{
         font-size: 40px;
     }
-    .zoom:hover, .prev:hover, .next:hover, .full:hover, .info:hover{
-        width: 75px;
-        height: 75px;
-        /* background-color: #ddd; */
-    }
     .zoom{
         position: absolute;
         top: 0;
@@ -206,10 +201,6 @@
     .next:hover{
         transform: rotate(-45deg);
     }
-    #discord:visited, #discord:link, #discord:hover{
-        color: rgb(88, 101, 242);
-        -webkit-text-stroke: 0px rgb(88, 101, 242);
-    }
     
     @media (max-width: 1200px) {
         .zoom, .prev, .next, .full, .info{            
@@ -242,11 +233,11 @@
         }
         #discord{
             position: absolute;
-            right: -17px;
-            top: 110px;
+            right: -12px;
+            top: 109px;
             font-size: 22px;
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             margin: 15px;
             margin-right: 22px;
             text-align: center;
@@ -939,6 +930,10 @@
         0 0 10px    #812148;
     }
 
+    #discord:visited, #discord:link, #discord:hover{
+        text-shadow: rgb(88, 101, 242), rgb(88, 101, 242), rgb(88, 101, 242);
+    }
+
     .marquee {
         position: absolute;
         top: -250px;
@@ -979,6 +974,10 @@
         height: 10px;
     }
     
+    .iku-rotate{
+        transform: rotate(90deg);
+    }
+
 </style>
 </head>
 <body>
@@ -1503,6 +1502,7 @@
 
     $(document).on('click', '.zoom', function (e) {
         zoom()
+        rotateContainer()
     });
     $(document).on('click', '#discord', function (e) {
         visibleVidget = !visibleVidget
@@ -1531,6 +1531,39 @@
           return angle
         }
         return 0;
+    }
+
+    function rotateContainer(){
+        var rotation = rot % 360
+        var index = Math.ceil((rotation < 0 ? 360 - (-rotation) : rotation) / (360/numberOfSectors) + 1)
+
+        if (index == 4){
+            if (zoomed){
+                $('.inner-img-container').css('transform', 'translateX(25%) translateY(-35%) rotate(-90deg)')
+            }
+            else{
+                $('.inner-img-container').css('transform', 'rotate(-90deg)')
+            }
+        }
+        else if (index == 7){
+            if (zoomed){
+                $('.inner-img-container').css('transform', 'translateX(-25%) translateY(-35%) rotate(75deg)')
+            }
+            else{
+                $('.inner-img-container').css('transform', 'rotate(75deg)')
+            }
+        }
+        else if (index == 9){
+            if (zoomed){
+                $('.inner-img-container').css('transform', 'translateX(-25%) translateY(-35%) rotate(90deg)')
+            }
+            else{
+                $('.inner-img-container').css('transform', 'rotate(90deg)')
+            }
+        }
+        else{
+            $('.inner-img-container').css('transform', '')
+        }
     }
 
     function rotateThis(nR) {
@@ -1562,6 +1595,8 @@
 
         var rotation = rot % 360
         var index = Math.ceil((rotation < 0 ? 360 - (-rotation) : rotation) / (360/numberOfSectors) + 1)
+
+        rotateContainer()
 
         $('#name').html(`<h1>${artists[index]['name']}</h1>`)
         rightHalf.style.backgroundColor = `#${artists[index]['color']}`
