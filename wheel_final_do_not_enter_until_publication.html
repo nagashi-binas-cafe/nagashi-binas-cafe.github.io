@@ -1,0 +1,1921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Squada+One&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<title>Rainbow Collab</title>
+<meta content="Rainbow Collab" property="og:title" />
+<meta content="Rainbow Collab made by Nagashi-Bina's Cafe Artists!" property="og:description" />
+<meta content="https://nagashi-binas-cafe.github.io/wheel" property="og:url" />
+<meta content="https://lh3.googleusercontent.com/d/1GFSDumrlYGryTuOhgqZwEB2_BhE6uhJQ" property="og:image" />
+<meta content="#7FFFD4" data-react-helmet="true" name="theme-color" />
+
+<style>
+    *{
+        transition: all 0.3s linear;
+    }
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+    button{
+        all: unset;
+    }
+    h1{
+        margin: 0;
+    }
+
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        height: 100vh;
+    }
+    .left-half, .right-half, .full-image{
+        box-sizing: border-box;
+    }
+    .full-image{
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: background-color 0.3s linear;
+        background-color: rgb(0, 0, 0, .8);
+    }
+    .full-image img{
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: center;
+        pointer-events: none;
+    }
+    .left-half {
+        width: 65%;
+        overflow: hidden;
+        position: relative;
+        background-color: white;
+        transition: background-color 0.3s linear;
+    }
+    #background, #background-gradient{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 50%;
+        background: linear-gradient(to bottom, rgb(0, 0, 0, 0), rgb(0, 0, 0, 0.5));
+        background-blend-mode:color-dodge;
+        transition: background-color 0.3s linear;
+    }
+    /* #background-gradient{
+        background: linear-gradient(to bottom, rgb(0, 0, 0, 0), rgb(0, 0, 0, 1));
+        background-blend-mode:color-burn;
+    } */
+    .left-half #wheel {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        position: relative;
+        transform-origin: center;
+    }
+    .wheel-one-place{ /*===============================================*/
+        position: absolute;
+        top: 0;
+        left: 0%;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+    #logo{
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        top: calc(50% - 25px + 2px);
+        left: calc(50% - 25px);
+    }
+    #click-area{
+        position: absolute;
+        transition: all 0.3s ease; 
+    }
+    #click-area * {
+        transition: all 0.3s ease; 
+    }
+    #click-area.zoomed{
+        /* left: -50%; */
+        transition: all 0.3s ease; 
+        /* height: 200%; */
+        transform: translateY(50%);
+    }
+    #click-area.zoomed .inner-img-container{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        /* transform: translateY(25%); */
+    }
+    #click-area .inner-img-container{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        transform: translateY(0%);
+    }
+    #wheel{
+        transform: rotate(0.0deg);
+        transition: all 0.3s ease; 
+    }
+    #click-area{
+        width: 100%;
+        height: 100%;
+    }
+
+    .zoom, .prev, .next, .full, .info, .screen-rotation{
+        width: 75px;
+        height: 75px;
+        transition: all 0.3s ease; 
+        transform: rotate(0deg) scale(1);
+        margin: 10px;
+        text-align: center;
+        border-radius: 38px;
+        cursor: pointer;
+    }
+    .zoom, .prev, .next, #discord, .full, .info, .screen-rotation{
+        color: white;
+        /* -webkit-text-stroke: 1px gray; */
+        /* text-shadow: 0px 2px 10px rgba(0,0,0,1); */
+    }
+    .icon-size{
+        font-size: 40px;
+    }
+    .zoom{
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+    .full{
+        position: absolute;
+        top: 80px;
+        right: 0px;
+        z-index: 11;
+    }
+    #discord{
+        position: absolute;
+        right: 0;
+        top: 170px;
+        font-size: 27px;
+        width: 50px;
+        height: 50px;
+        margin: 15px;
+        margin-right: 22px;
+        text-align: center;
+        vertical-align: middle;
+        line-height: 50px;
+        transition: all 0.3s ease; 
+        /* color: black; */
+        cursor: pointer;
+    }
+    .info{
+        position: absolute;
+        top: 250px;
+        right: 0;
+    }
+    .screen-rotation{
+        position: absolute;
+        bottom: 0;
+        left: calc(50% - 37.5px);
+    }
+    .zoom:hover, #discord:hover, .full:hover, .info:hover, .screen-rotation:hover{
+        transform: scale(1.2);
+    }
+    .prev{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        z-index: 11;
+    }
+    .prev:hover{
+        transform: rotate(45deg);
+    }
+    .next{
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        z-index: 11;
+    }
+    .next:hover{
+        transform: rotate(-45deg);
+    }
+    
+    @media (max-width: 1200px) {
+        .zoom, .prev, .next, .full, .info{            
+            width: 40px;
+            height: 40px;
+            transition: all 0.3s ease; 
+            transform: rotate(0deg) scale(1);
+            margin: 10px;
+            text-align: center;
+            border-radius: 38px;
+            cursor: pointer;
+        }
+        .zoom, .prev, .next, #discord, .full, .info{
+            color: white;
+            /* -webkit-text-stroke: 1px gray; */
+            /* text-shadow: 0px 2px 10px rgba(0,0,0,1); */
+        }
+        .screen-rotation{         
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            bottom: 0;
+            left: calc(50% - 20px);
+        }
+        .icon-size{
+            font-size: 30px;
+        }
+        .zoom{
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+        .full{
+            position: absolute;
+            top: 60px;
+            z-index: 11;
+        }
+        #discord{
+            position: absolute;
+            right: -12px;
+            top: 109px;
+            font-size: 22px;
+            width: 40px;
+            height: 40px;
+            margin: 15px;
+            margin-right: 22px;
+            text-align: center;
+            vertical-align: middle;
+            line-height: 50px;
+            transition: all 0.3s ease; 
+            /* color: black; */
+            cursor: pointer;
+        }
+        .info{
+            position: absolute;
+            top: 185px;
+        }
+        .zoom:hover, #discord:hover, .full:hover, .info:hover{
+            width: 40px;
+            height: 40px;
+            transform: scale(1.2);
+        }
+        .wheel-one-place{
+            width: 100%;
+            left: 0;
+        }
+    }
+
+    .right-half {
+        width: 35%;
+        background-color: #f0f0f0; /* Фон правой половины страницы */
+        transition: background-color 0.3s linear;
+        /* box-shadow: 0px 0px 10px black; */
+        /* z-index: -1000; */
+    }
+    .right-half *{
+        padding: 10px;
+    }
+
+    .artist-info{
+        /* border: 2px solid #303030; */
+
+        position: relative;
+        background: linear-gradient(to right bottom, rgb(0, 0, 0, .3), rgb(0, 0, 0, .5));
+        margin: 15px;
+        border-radius: 5px;
+        padding-bottom: 30px;
+        height: calc(100% - 70px);
+        overflow-x: hidden;
+
+        color: #fff;
+        /* box-shadow: 0px 0px 15px black; */
+    }
+    .artist-info a{
+        display: block;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    .artist-info a:visited, .artist-info a:link, .artist-info a:hover{
+        position: relative;
+        color: #fff;
+        text-decoration: none;
+        font-family: "Montserrat", sans-serif;
+        font-optical-sizing: auto;
+        font-style: normal;
+        z-index: 10;
+    }
+    .artist-info a:hover{
+        text-decoration: underline;
+    }
+    .artist-info i{
+        padding-left: 0px;
+    }
+    .links a{
+        position: relative;
+        z-index: 9999;
+    }
+    #name, #name h1{
+        position: relative;
+        margin-bottom: 0;
+        padding-bottom: 0;
+        z-index: 10;
+    }
+    #name h1{
+        font-family: "Squada One", cursive;
+        font-weight: 700;
+        font-style: normal;
+        font-size: 55px;
+    }
+    #aka {
+        padding-top: 0;
+        padding-left: 20px;
+        font-size: 12px;
+        color: #aaa;
+    }
+    @media (max-width: 1200px) {
+        .container {
+            flex-direction: column;
+        }
+        .left-half, .right-half, .full-image {
+            width: 100%;
+        }
+        .left-half {
+            height: 60%;
+        }
+        .full-image img{
+            height: 90%;
+        }
+        .right-half {
+            height: 40%;
+            overflow: scroll;
+        }
+        .artist-info{
+            min-height: calc(100% - 70px);
+            height: auto;
+        }
+        #logo{
+            display: hidden;
+            opacity: 0%;
+        }
+    }
+
+    .tutorial{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: calc(100% - 40px);
+        height: calc(100% - 40px);
+        background-color: rgb(0, 0, 0, .95);
+        z-index: 999;
+
+        padding: 20px;
+        font-size: 14px;
+        color: white;
+    }
+    .tutorial-container{
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+    .authors{
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        padding: 10px;
+        font-family: "Montserrat", sans-serif;
+        text-align: right;
+    }
+    .tutorial i{
+        width: 40px;
+        height: 27px;
+    }
+    .tutorial .material-symbols-outlined{
+        margin-bottom: 10px;
+        margin-left: 20px;
+        margin-right: 10px;
+        font-size: 27px;
+    }
+    .tutorial span{
+        vertical-align: middle;
+        line-height: 35px;
+        height: 27px;
+    }
+    .tutorial span.text{
+        font-family: "Montserrat", sans-serif;
+    }
+    .tutorial-header{
+        display: block;
+        padding-left: 55px;
+        margin-top: 5px;
+    }
+    .tutorial h1{
+        margin-bottom: 20px;
+        font-family: "Montserrat", sans-serif;
+    }
+    .hidden-smooth{
+        transition: transform 0.3s ease;
+        transform: translateY(-100vh);
+    }
+    .visible-smooth{
+        transition: transform 0.3s ease;
+        transform: translateY(0vh);
+    }
+    .hidden{
+        transition: none;
+        visibility: hidden;
+        top: -100vh;
+    }
+    #arrow-forward{
+        margin-left: 0;
+    }
+    @media (max-width: 1200px) {
+        .tutorial{
+            font-size: 11px;
+        }
+        .tutorial .material-symbols-outlined{
+            margin-bottom: 10px;
+            margin-left: 10px;
+            margin-right: 5px;
+            margin-top: -10px;
+            font-size: 20px;
+        }
+        .tutorial br{
+            visibility: hidden;
+            height: 0;
+        }
+    }
+
+    /* .sprite{
+        position: relative;
+        z-index: 10;
+        height: auto;
+        max-width: 230px;
+        width: 100%;
+        width: auto;
+        -webkit-mask-image: -webkit-gradient(linear, left top, right bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+        pointer-events: none;
+        margin: 10px;
+    } */
+    .artist-info img{
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        display: table-cell;
+        vertical-align: bottom;
+        height: 70%;
+        width: auto;
+        object-fit: contain;
+        padding: 0;
+        pointer-events: none;
+        -webkit-mask-image: -webkit-gradient(linear, left top, right bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+    }
+    @media (max-width: 1200px) {
+        .artist-info img{
+            bottom: 0;
+            height: 95%;
+            /* height: 33%;
+            margin-right: 20px; */
+        }
+    }
+
+    #discord-widget{
+        position: absolute;
+        width: 35%;
+        height: 100%;
+        bottom: 0;
+        right: 0;
+        z-index: 999;
+        background-color: rgb(177, 236, 217);
+    }
+    /* #widget-container{
+        position: relative;
+        width: 100%;
+    } */
+    #server-name{
+        padding: 10px;
+        margin: 10px;
+        font-family: "Montserrat", sans-serif;
+        font-weight: bolder;
+        font-size: 20px;
+        width: calc(100% - 40px);
+        text-align: center;
+
+        color: white;
+        background-color: rgb(88, 101, 242);
+        border-radius: 10px;
+
+        box-shadow: 0px 0px 10px rgb(63, 133, 121);
+    }
+
+    iframe{
+        position: absolute;
+        
+        width: calc(100% - 20px);
+        height: calc(100% - 80px);
+        margin: 10px;
+        padding: 0;
+
+        bottom: 0;
+        right: 0;
+
+        box-shadow: 0px 0px 10px rgb(63, 133, 121);
+    }
+    @media (max-width: 1200px) {
+        #discord-widget{
+            height: 40%;
+            width: 100%;
+        }
+    }
+
+    #char-name{
+        position: absolute;
+        width: 260px;
+        margin: 20px;
+        text-shadow: 0px 2px 10px rgba(0,0,0,1);
+        color: white;
+        align-items: center;
+        z-index: 11;
+        /* background: linear-gradient(to bottom, rgb(0, 0, 0, 0), rgb(0, 0, 0, .5), rgb(0, 0, 0, 0)); */
+    }
+    #char-name *{
+        text-align: center;
+        width: 100%;
+        transition: text-shadow 0.3 ease;
+        /* text-shadow:
+        -1px -1px 0 black,
+         0   -1px 0 black,
+         1px -1px 0 black,
+         1px  0   0 black,
+         1px  1px 0 black,
+         0    1px 0 black,
+        -1px  1px 0 black,
+        -1px  0   0 black,
+        0 0 10px black,
+        0 0 10px black,
+        0 0 10px black; */
+
+    }
+    #char-name h1{
+        font-family: "Tangerine", cursive;
+        font-weight: bold;
+        font-style: normal;
+        font-size: 50px;
+    }
+    #char-name p{
+        margin: 0;
+        padding: 0;
+        font-family: "Montserrat", sans-serif;
+    }
+    @media (max-width: 1200px) {
+        #char-name{
+            width: 200px;
+            margin: 2px;
+            margin-top: 10px;
+        }
+        #char-name h1{
+            font-size: 30px;
+        }
+        #char-name p{
+            font-size: 12px;
+        }
+    }
+
+    .kasen *{
+        text-shadow:
+        -2px -2px 2px #781010,
+         0   -2px 2px #781010,
+         2px -2px 2px #781010,
+         2px  0   2px #781010,
+         2px  2px 2px #781010,
+         0    2px 2px #781010,
+        -2px  2px 2px #781010,
+        -2px  0   2px #781010,
+        -2px -2px 2px #781010,
+         0   -2px 2px #781010,
+         2px -2px 2px #781010,
+         2px  0   2px #781010,
+         2px  2px 2px #781010,
+         0    2px 2px #781010,
+        -2px  2px 2px #781010,
+        -2px  0   2px #781010,
+        0 0 15px    #781010,
+        0 0 15px    #781010,
+        0 0 15px    #781010,
+        0 0 15px    #781010,
+        0 0 15px    #781010,
+        0 0 15px    #781010;
+    }
+    .saki *{
+        text-shadow:
+        -2px -2px 2px #99501e,
+         0   -2px 2px #99501e,
+         2px -2px 2px #99501e,
+         2px  0   2px #99501e,
+         2px  2px 2px #99501e,
+         0    2px 2px #99501e,
+        -2px  2px 2px #99501e,
+        -2px  0   2px #99501e,
+        -2px -2px 2px #99501e,
+         0   -2px 2px #99501e,
+         2px -2px 2px #99501e,
+         2px  0   2px #99501e,
+         2px  2px 2px #99501e,
+         0    2px 2px #99501e,
+        -2px  2px 2px #99501e,
+        -2px  0   2px #99501e,
+        0 0 15px    #99501e,
+        0 0 15px    #99501e,
+        0 0 15px    #99501e,
+        0 0 15px    #99501e,
+        0 0 15px    #99501e,
+        0 0 15px    #99501e;
+    }
+    .suwako *{
+        text-shadow:
+        -2px -2px 2px #9f890f,
+         0   -2px 2px #9f890f,
+         2px -2px 2px #9f890f,
+         2px  0   2px #9f890f,
+         2px  2px 2px #9f890f,
+         0    2px 2px #9f890f,
+        -2px  2px 2px #9f890f,
+        -2px  0   2px #9f890f,
+        -2px -2px 2px #9f890f,
+         0   -2px 2px #9f890f,
+         2px -2px 2px #9f890f,
+         2px  0   2px #9f890f,
+         2px  2px 2px #9f890f,
+         0    2px 2px #9f890f,
+        -2px  2px 2px #9f890f,
+        -2px  0   2px #9f890f,
+        0 0 15px    #9f890f,
+        0 0 15px    #9f890f,
+        0 0 15px    #9f890f,
+        0 0 15px    #9f890f,
+        0 0 15px    #9f890f,
+        0 0 15px    #9f890f;
+    }
+    .tojiko *{
+        text-shadow:
+        -2px -2px 2px #29870e,
+         0   -2px 2px #29870e,
+         2px -2px 2px #29870e,
+         2px  0   2px #29870e,
+         2px  2px 2px #29870e,
+         0    2px 2px #29870e,
+        -2px  2px 2px #29870e,
+        -2px  0   2px #29870e,
+        -2px -2px 2px #29870e,
+         0   -2px 2px #29870e,
+         2px -2px 2px #29870e,
+         2px  0   2px #29870e,
+         2px  2px 2px #29870e,
+         0    2px 2px #29870e,
+        -2px  2px 2px #29870e,
+        -2px  0   2px #29870e,
+        0 0 15px    #29870e,
+        0 0 15px    #29870e,
+        0 0 15px    #29870e,
+        0 0 15px    #29870e,
+        0 0 15px    #29870e,
+        0 0 15px    #29870e;
+    }
+    .seiga *{
+        text-shadow:
+        -2px -2px 2px #157871,
+         0   -2px 2px #157871,
+         2px -2px 2px #157871,
+         2px  0   2px #157871,
+         2px  2px 2px #157871,
+         0    2px 2px #157871,
+        -2px  2px 2px #157871,
+        -2px  0   2px #157871,
+        -2px -2px 2px #157871,
+         0   -2px 2px #157871,
+         2px -2px 2px #157871,
+         2px  0   2px #157871,
+         2px  2px 2px #157871,
+         0    2px 2px #157871,
+        -2px  2px 2px #157871,
+        -2px  0   2px #157871,
+        0 0 15px    #157871,
+        0 0 15px    #157871,
+        0 0 15px    #157871,
+        0 0 15px    #157871,
+        0 0 15px    #157871,
+        0 0 15px    #157871;
+    }
+    .cirno *{
+        text-shadow:
+        -2px -2px 2px #1a6f7e,
+         0   -2px 2px #1a6f7e,
+         2px -2px 2px #1a6f7e,
+         2px  0   2px #1a6f7e,
+         2px  2px 2px #1a6f7e,
+         0    2px 2px #1a6f7e,
+        -2px  2px 2px #1a6f7e,
+        -2px  0   2px #1a6f7e,
+        -2px -2px 2px #1a6f7e,
+         0   -2px 2px #1a6f7e,
+         2px -2px 2px #1a6f7e,
+         2px  0   2px #1a6f7e,
+         2px  2px 2px #1a6f7e,
+         0    2px 2px #1a6f7e,
+        -2px  2px 2px #1a6f7e,
+        -2px  0   2px #1a6f7e,
+        0 0 15px    #1a6f7e,
+        0 0 15px    #1a6f7e,
+        0 0 15px    #1a6f7e,
+        0 0 15px    #1a6f7e,
+        0 0 15px    #1a6f7e,
+        0 0 15px    #1a6f7e;
+    }
+    .doremy *{
+        text-shadow:
+        -2px -2px 2px #1c2d75,
+         0   -2px 2px #1c2d75,
+         2px -2px 2px #1c2d75,
+         2px  0   2px #1c2d75,
+         2px  2px 2px #1c2d75,
+         0    2px 2px #1c2d75,
+        -2px  2px 2px #1c2d75,
+        -2px  0   2px #1c2d75,
+        -2px -2px 2px #1c2d75,
+         0   -2px 2px #1c2d75,
+         2px -2px 2px #1c2d75,
+         2px  0   2px #1c2d75,
+         2px  2px 2px #1c2d75,
+         0    2px 2px #1c2d75,
+        -2px  2px 2px #1c2d75,
+        -2px  0   2px #1c2d75,
+        0 0 15px    #1c2d75,
+        0 0 15px    #1c2d75,
+        0 0 15px    #1c2d75,
+        0 0 15px    #1c2d75,
+        0 0 15px    #1c2d75,
+        0 0 15px    #1c2d75;
+    }
+    .iku *{
+        text-shadow:
+        -2px -2px 2px #472d87,
+         0   -2px 2px #472d87,
+         2px -2px 2px #472d87,
+         2px  0   2px #472d87,
+         2px  2px 2px #472d87,
+         0    2px 2px #472d87,
+        -2px  2px 2px #472d87,
+        -2px  0   2px #472d87,
+        -2px -2px 2px #472d87,
+         0   -2px 2px #472d87,
+         2px -2px 2px #472d87,
+         2px  0   2px #472d87,
+         2px  2px 2px #472d87,
+         0    2px 2px #472d87,
+        -2px  2px 2px #472d87,
+        -2px  0   2px #472d87,
+        0 0 15px    #472d87,
+        0 0 15px    #472d87,
+        0 0 15px    #472d87,
+        0 0 15px    #472d87,
+        0 0 15px    #472d87,
+        0 0 15px    #472d87;
+    }
+    .satori *{
+        text-shadow:
+        -2px -2px 2px #753184,
+         0   -2px 2px #753184,
+         2px -2px 2px #753184,
+         2px  0   2px #753184,
+         2px  2px 2px #753184,
+         0    2px 2px #753184,
+        -2px  2px 2px #753184,
+        -2px  0   2px #753184,
+        -2px -2px 2px #753184,
+         0   -2px 2px #753184,
+         2px -2px 2px #753184,
+         2px  0   2px #753184,
+         2px  2px 2px #753184,
+         0    2px 2px #753184,
+        -2px  2px 2px #753184,
+        -2px  0   2px #753184,
+        0 0 15px    #753184,
+        0 0 15px    #753184,
+        0 0 15px    #753184,
+        0 0 15px    #753184,
+        0 0 15px    #753184,
+        0 0 15px    #753184;
+    }
+    .sekibanki *{
+        text-shadow:
+        -2px -2px 2px #812148,
+         0   -2px 2px #812148,
+         2px -2px 2px #812148,
+         2px  0   2px #812148,
+         2px  2px 2px #812148,
+         0    2px 2px #812148,
+        -2px  2px 2px #812148,
+        -2px  0   2px #812148,
+        -2px -2px 2px #812148,
+         0   -2px 2px #812148,
+         2px -2px 2px #812148,
+         2px  0   2px #812148,
+         2px  2px 2px #812148,
+         0    2px 2px #812148,
+        -2px  2px 2px #812148,
+        -2px  0   2px #812148,
+        0 0 15px    #812148,
+        0 0 15px    #812148,
+        0 0 15px    #812148,
+        0 0 15px    #812148,
+        0 0 15px    #812148,
+        0 0 15px    #812148;
+    }
+    
+    .kasen-shadow *{
+        text-shadow:
+        0 0 10px    #781010,
+        0 0 10px    #781010,
+        0 0 10px    #781010,
+        0 0 10px    #781010,
+        0 0 10px    #781010;
+    }
+    .saki-shadow *{
+        text-shadow:
+        0 0 10px    #99501e,
+        0 0 10px    #99501e,
+        0 0 10px    #99501e,
+        0 0 10px    #99501e,
+        0 0 10px    #99501e;
+    }
+    .suwako-shadow *{
+        text-shadow:
+        0 0 10px    #9f890f,
+        0 0 10px    #9f890f,
+        0 0 10px    #9f890f,
+        0 0 10px    #9f890f,
+        0 0 10px    #9f890f;
+    }
+    .tojiko-shadow *{
+        text-shadow:
+        0 0 10px    #29870e,
+        0 0 10px    #29870e,
+        0 0 10px    #29870e,
+        0 0 10px    #29870e,
+        0 0 10px    #29870e;
+    }
+    .seiga-shadow *{
+        text-shadow:
+        0 0 10px    #157871,
+        0 0 10px    #157871,
+        0 0 10px    #157871,
+        0 0 10px    #157871,
+        0 0 10px    #157871;
+    }
+    .cirno-shadow *{
+        text-shadow:
+        0 0 10px    #1a6f7e,
+        0 0 10px    #1a6f7e,
+        0 0 10px    #1a6f7e,
+        0 0 10px    #1a6f7e,
+        0 0 10px    #1a6f7e;
+    }
+    .doremy-shadow *{
+        text-shadow:
+        0 0 10px    #1c2d75,
+        0 0 10px    #1c2d75,
+        0 0 10px    #1c2d75,
+        0 0 10px    #1c2d75,
+        0 0 10px    #1c2d75;
+    }
+    .iku-shadow *{
+        text-shadow:
+        0 0 10px    #472d87,
+        0 0 10px    #472d87,
+        0 0 10px    #472d87,
+        0 0 10px    #472d87,
+        0 0 10px    #472d87;
+    }
+    .satori-shadow *{
+        text-shadow:
+        0 0 10px    #753184,
+        0 0 10px    #753184,
+        0 0 10px    #753184,
+        0 0 10px    #753184,
+        0 0 10px    #753184;
+    }
+    .sekibanki-shadow *{
+        text-shadow:
+        0 0 10px    #812148,
+        0 0 10px    #812148,
+        0 0 10px    #812148,
+        0 0 10px    #812148,
+        0 0 10px    #812148;
+    }
+    
+    .kasen-shadow-here{
+        box-shadow:
+        0 0 10px    #781010;
+    }
+    .saki-shadow-here{
+        box-shadow:
+        0 0 10px    #99501e;
+    }
+    .suwako-shadow-here{
+        box-shadow:
+        0 0 10px    #9f890f;
+    }
+    .tojiko-shadow-here{
+        box-shadow:
+        0 0 10px    #29870e;
+    }
+    .seiga-shadow-here{
+        box-shadow:
+        0 0 10px    #157871;
+    }
+    .cirno-shadow-here{
+        box-shadow:
+        0 0 10px    #1a6f7e;
+    }
+    .doremy-shadow-here{
+        box-shadow:
+        0 0 10px    #1c2d75;
+    }
+    .iku-shadow-here{
+        box-shadow:
+        0 0 10px    #472d87;
+    }
+    .satori-shadow-here{
+        box-shadow:
+        0 0 10px    #753184;
+    }
+    .sekibanki-shadow-here{
+        box-shadow:
+        0 0 10px    #812148;
+    }
+
+    #discord:visited, #discord:link, #discord:hover{
+        text-shadow: rgb(88, 101, 242), rgb(88, 101, 242), rgb(88, 101, 242);
+    }
+
+    .marquee {
+        position: absolute;
+        top: -250px;
+        left: -50px;
+        white-space: nowrap;
+        
+        font-family: "Montserrat", sans-serif;
+        font-size: 50px;
+        font-weight: bold;
+        color: white;
+    }
+    .marquee>div{
+        margin: 100px 0;
+    }
+    .marquee>div>div{
+        display: inline-block;
+        animation: marquee 8s linear infinite;
+        transform: rotate(45deg);
+        opacity: 30%;
+    }
+
+    @keyframes marquee {
+        0% { left: -100%; } /* Начальная позиция справа за пределами контейнера */
+        100% { left: 100%; } /* Конечная позиция слева за пределами контейнера */
+    }
+    @media (max-width: 1200px) {
+        .marquee {
+            transition: none;
+            font-size: 25px;
+        }
+    }
+
+    .image-loader, .image-loader *{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 10px;
+        height: 10px;
+    }
+    
+    .iku-rotate{
+        transform: rotate(90deg);
+    }
+
+    #wheel-kasen{
+        z-index: 1;
+    }
+    #wheel-saki{
+        z-index: 2;
+    }
+    #wheel-suwako{
+        z-index: 3;
+    }
+    #wheel-seiga{
+        z-index: 1;
+    }
+    #wheel-doremy{
+        z-index: 2;
+    }
+
+    #loader{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        align-items: middle;
+        z-index: 9999;
+        background-color: #000;
+        color: white;
+        font-family: 'Montserrat', sans-serif;
+    }
+    #loader *{
+        display: block;
+    }
+    #loader-container{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin: -50px 0 0 -145px;
+        width: 290px;
+        /* width: 50%; */
+    }
+    #loader-container *{
+        display: flex;
+        width: 290px;
+        text-align: center;
+    }
+    .loader {
+        --c: white;
+        width: fit-content;
+        font-weight: bold;
+        font-family: monospace;
+        font-size: 30px;
+        color: #0000;
+        overflow: hidden;
+        text-shadow: 0 0 var(--c),23ch 0 var(--c);
+        animation: l6 5s infinite linear;
+    }
+    .loader:before {
+        content:"Girls are praying...";
+        font-family: 'Montserrat', sans-serif;
+    }
+    @keyframes l6 {to{text-shadow:-23ch 0 var(--c),0ch 0 var(--c)}}
+
+</style>
+</head>
+<body>
+<div class="container">
+
+    <div id="loader">
+        <div id="loader-container">
+            <div class="loader"></div>
+            <span>... and loading. Please wait serenely...</span>
+        </div>
+    </div>
+
+    <div class="tutorial">
+        <div class="tutorial-container">
+            <h1>Before you go...</h1>
+            <i><span class="material-symbols-outlined">
+                zoom_in
+            </span></i><span class="text">Zoom in/out</span><br>
+            <i><span class="material-symbols-outlined">
+                image
+            </span></i><span class="text">Open/close full sector image</span><br>
+            <i><span class="material-symbols-outlined">
+                rotate_right
+            </span></i><span class="text">Spin the wheel clockwise</span><br>
+            <i><span class="material-symbols-outlined">
+                rotate_left
+            </span></i><span class="text">Spin the wheel counterclockwise</span><br>
+            <i><span class="material-symbols-outlined">
+                screen_rotation
+            </span></i><span class="text">Enable/disable personalised sector rotation</span><br>
+            <i><span class="material-symbols-outlined">
+                info
+            </span></i><span class="text">Open this tutorial</span><br>
+            
+            <span class="tutorial-header text">Using keyboard:</span>
+            <i><span class="material-symbols-outlined">
+                arrow_back
+            </span></i>
+            <i><span class="material-symbols-outlined" id="arrow-forward">
+                arrow_forward
+            </span></i><span class="text">Spin the wheel</span><br>
+            <i><span class="material-symbols-outlined">
+                arrow_upward
+            </span></i><span class="text">Open/close full sector image</span><br>
+            <i><span class="material-symbols-outlined">
+                arrow_downward
+            </span></i><span class="text">Zoom in/out</span><br>
+
+            <span class="tutorial-header text">Using swipes (mobile devices):</span>
+            <i><span class="material-symbols-outlined">
+                arrow_back
+            </span></i>
+            <i><span class="material-symbols-outlined" id="arrow-forward">
+                arrow_forward
+            </span></i>
+            <i><span class="material-symbols-outlined" id="arrow-forward">
+                arrow_upward
+            </span></i>
+            <i><span class="material-symbols-outlined" id="arrow-forward">
+                arrow_downward
+            </span></i><span class="text">Spin the wheel</span><br>
+
+            <span class="tutorial-header text">Click anywhere to continue...</span>
+            <div class="authors">collab curator - <u>Collectollider</u><br>website made by <u>klabisot</u>, with help from <u>KateDragna</u> and <u>Collectollider</u></div>
+        </div>
+    </div>
+    <div class="left-half" id="left-half">
+        <div id="background"></div>
+        <div id="background-gradient">
+            <div class="marquee">
+                <div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                </div>
+                <div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                </div>
+                <div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                </div>
+                <div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                </div>
+                <div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                </div>
+                <div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                </div>
+                <div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                </div>
+                <div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                </div>
+                <div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                </div>
+                <div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                    <div>RAINBOW COLLAB</div>
+                </div>
+            </div>
+        </div>
+        <div id="click-area">
+            <div class="inner-img-container" id="images-here">
+                <div id="wheel">
+                    <!-- <img id="wheel" src="https://lh3.googleusercontent.com/d/1GFSDumrlYGryTuOhgqZwEB2_BhE6uhJQ" alt="Крутящееся изображение"> -->
+                    <!-- <img id="logo" src="https://lh3.googleusercontent.com/d/1JjgqnhYnpwr97w1uSl5-Lce_heplI-Fd" alt="Лого"> -->
+                </div>
+            </div>
+        </div>
+        <div id="char-name">
+            <h1 id="stroking-name">Kasen Ibaraki</h1>
+            <p  id="stroking-title">The One-Armed, Horned Hermit</p>
+        </div>
+        <div id="icons">
+            <button class="zoom">
+                <i><span class="material-symbols-outlined icon-size" id="zoom-icon">
+                    zoom_in
+                </span></i>
+            </button>
+            <div id="discord" class="fab fa-discord"></div>
+            <button class="full">
+                <i><span class="material-symbols-outlined icon-size" id="zoom-icon">
+                    image
+                </span></i>
+            </button>
+            <button class="info">
+                <i><span class="material-symbols-outlined icon-size" id="zoom-icon">
+                    info
+                </span></i>
+            </button>
+
+            <button class="next">
+                <i><span class="material-symbols-outlined icon-size">
+                    rotate_left
+                </span></i>
+            </button>
+            <button class="screen-rotation">
+                <i><span class="material-symbols-outlined icon-size" id="rotation-icon">
+                    screen_rotation
+                </span></i>
+            </button>
+            <button class="prev">
+                <i><span class="material-symbols-outlined icon-size">
+                    rotate_right
+                </span></i>
+            </button>
+        </div>
+        
+        <div class="full-image hidden-smooth" id="full-image">
+            <img src="https://via.placeholder.com/300" />
+        </div>
+    </div>
+
+    <div id="discord-widget" class="hidden-smooth">
+        <div id="widget-container">
+            <div id="server-name">Nagashi-Bina's Cafe server</div>
+            <iframe src="https://discord.com/widget?id=296283889100521475&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+        </div>
+    </div>
+
+    <div class="right-half" id="right-half" style="">
+        <!-- <div class="sprite"><img src="https://en.touhouwiki.net/images/5/51/Th10Hina.png" /></div> -->
+        <div class="artist-info">
+            <img id="sprite" src="https://en.touhouwiki.net/images/5/51/Th10Hina.png" />
+            <div id="name"><h1>Name 1</h1></div>
+            <!-- <div id="aka">aka this and this</div> -->
+            <div id="links">
+                <a href="">sdiifhsidihfsd</a>
+            </div>
+        </div>
+        <!-- Здесь может быть контент для правой половины страницы -->
+    </div>
+
+    <div class="image-loader" style="position: absolute; z-index: -99999;">
+
+    </div>
+</div>
+
+<script>
+    const artists = {
+        2: {
+            name: 'Borsh',
+            sprite: 'https://en.touhouwiki.net/images/5/58/Th14Sekibanki.png',
+            piece: 'https://lh3.googleusercontent.com/d/13UkJvibPhioM9qeMc5Hqi9q-W2EAzO8L',
+            full: 'https://lh3.googleusercontent.com/d/10BmCC_NoeTV6duesAIYWrcaD7sdQ7c4A',
+            // https://drive.google.com/file/d/10BmCC_NoeTV6duesAIYWrcaD7sdQ7c4A/view?usp=drive_link
+            charname: 'Sekibanki',
+            title: 'The Rokurokubi Horror',
+            links: {
+                twitter: {name: 'YaVsralas', url: 'https://twitter.com/vsralas?t=nLUq-2M9UydX3CMEUats9Q&s=09'}
+            },
+            color: 'ffa0ba',
+            stroke: 'sekibanki'
+        },
+        1: {
+            name: 'IamSuicc',
+            sprite: 'https://en.touhouwiki.net/images/f/ff/Th155Kasen.png',
+            piece: 'https://lh3.googleusercontent.com/d/1VDiRO82y4kPwiX2b6-Tclq03QBdJqhUD',
+            full: 'https://lh3.googleusercontent.com/d/1UGNIRzN80DPkLfG1w_dSHbNsr6AI7rrM',
+            // https://drive.google.com/file/d/1UGNIRzN80DPkLfG1w_dSHbNsr6AI7rrM/view?usp=drive_link
+            charname: 'Kasen Ibaraki',
+            title: 'The One-Armed, Horned Hermit',
+            links: {
+                vk: {name: 'reincarnationkages', url: 'https://vk.com/reincarnationkages'},
+            },
+            color: 'ffa8a8',
+            stroke: 'kasen'
+        },
+        10: {
+            name: 'Collectollider',
+            sprite: 'https://en.touhouwiki.net/images/5/5b/Th19Saki.png',
+            piece: 'https://lh3.googleusercontent.com/d/19o95BBF0F5fOstxS75pMN2xqDnl7gLzt',
+            full: 'https://lh3.googleusercontent.com/d/1RtN0V57oRP6jV4G2hM9hFkQWfi3ysmpt',
+            // https://drive.google.com/file/d/1RtN0V57oRP6jV4G2hM9hFkQWfi3ysmpt/view?usp=drive_link
+            charname: 'Saki Kurokoma',
+            title: 'Matriarch of the Keiga Family',
+            links: {
+                twitter: {name: 'collidellector', url: 'https://twitter.com/collidellector'},
+                pixiv: {name: 'Collectollider', url: 'https://www.pixiv.net/en/users/8515429'},
+            },
+            color: 'ffbfa0',
+            stroke: 'saki'
+        },
+        9: {
+            name: 'KateDragna',
+            sprite: 'https://en.touhouwiki.net/images/9/9a/Th10Suwako.png',
+            piece: 'https://lh3.googleusercontent.com/d/1QfTwcSHIo4ckDcTzW70Jfu1WW2HoqsFn',
+            full: 'https://lh3.googleusercontent.com/d/1B69w1GiGVHtmvH_87EziNJvHb1rHWDGA',
+            // https://drive.google.com/file/d/1B69w1GiGVHtmvH_87EziNJvHb1rHWDGA/view?usp=drive_link
+            charname: 'Suwako Moriya',
+            title: 'The Highest of Indigenous Gods',
+            links: {
+                twitter: {name: 'KateDragna', url: 'https://twitter.com/kate_dragna'},
+                vk: {name: 'KateDragna', url: 'https://vk.com/kate_dragna'},
+            },
+            color: 'ffe9a0',
+            stroke: 'suwako'
+        },
+        8: {
+            name: 'shiratori',
+            sprite: 'https://en.touhouwiki.net/images/0/07/Th13Tojiko.png',
+            piece: 'https://lh3.googleusercontent.com/d/1CoOJ2-8Pj_KedOEnBJeBsWAZse0oLvnh',
+            full: 'https://lh3.googleusercontent.com/d/1qPAm5Yy2nNv9gbwhhp6y4zg8kLBxyZtj',
+            // https://drive.google.com/file/d/1qPAm5Yy2nNv9gbwhhp6y4zg8kLBxyZtj/view?usp=drive_link
+            charname: 'Soga no Tojiko',
+            title: 'Ghost of the Descendant of the Gods',
+            links: {twitter: {name: 'shiratori-p', url: 'https://twitter.com/sAshiratori'}},
+            color: 'c6ffc7',
+            stroke: 'tojiko'
+        },
+        7: {
+            name: 'Dungeon Toaster',
+            sprite: 'https://en.touhouwiki.net/images/b/b0/Th13Seiga.png',
+            piece: 'https://lh3.googleusercontent.com/d/1XMuOy9ojXAZ-kmWXP6sPwEcEy6LlEaRm',
+            full: 'https://lh3.googleusercontent.com/d/1FPTgSZrYRsmc2bXJxL4bEcWJRPtWoMrD',
+            // https://drive.google.com/file/d/1FPTgSZrYRsmc2bXJxL4bEcWJRPtWoMrD/view?usp=drive_link
+            charname: 'Seiga Kaku',
+            title: 'The Wicked Hermit Who Passes Through Walls',
+            links: {twitter: {name: 'Dungeon Toaster', url: 'https://twitter.com/OrdinaryRizzych'}},
+            color: 'a4ffe2',
+            stroke: 'seiga'
+        },
+        6: {
+            name: 'Mamoka Migatte',
+            sprite: 'https://en.touhouwiki.net/images/d/d5/Th14Cirno.png',
+            piece: 'https://lh3.googleusercontent.com/d/17_canKHZdAt7gCZl0F0YletwWpnqylkR',
+            full: 'https://lh3.googleusercontent.com/d/1FDwRTPSVSjy4OSOgbjmaUiT6Bn6z9j69',
+            // https://drive.google.com/file/d/1FDwRTPSVSjy4OSOgbjmaUiT6Bn6z9j69/view?usp=drive_link
+            charname: 'Cirno',
+            title: 'Fairy of the Ice',
+            links: {
+                telegram: {name: 'Mamoka Migatte TFT', url: 'https://t.me/mamokamigattearttg'},
+                vk: {name: 'Mamoka Migatte TFT', url: 'https://vk.com/mamoka_migatte_art'}
+            },
+            color: 'c6fffc',
+            stroke: 'cirno'
+        },
+        5: {
+            name: 'klabisot',
+            sprite: 'https://en.touhouwiki.net/images/5/5e/Th15Doremy.png',
+            piece: 'https://lh3.googleusercontent.com/d/1d1UBXhPGo-JRsYjN2Q2uXbwcPPX6xcZ1',
+            full: 'https://lh3.googleusercontent.com/d/1Ej3RhcsT9rQt_DxAsmXpi9wDSSsN5DL3',
+            // https://drive.google.com/file/d/1Ej3RhcsT9rQt_DxAsmXpi9wDSSsN5DL3/view?usp=drive_link
+            charname: 'Doremy Sweet',
+            title: 'Ruler of Dreams',
+            links: {
+                twitter: {name: 'Dreamy Lounge', url: 'https://twitter.com/Klabisot'},
+                pixiv: {name: 'Klabisot', url: 'https://www.pixiv.net/en/users/28984542'},
+            },
+            color: 'a0afff',
+            stroke: 'doremy'
+        },
+        4: {
+            name: 'Aka-Mak',
+            sprite: 'https://lh3.googleusercontent.com/d/12Np8zLFWcKvfnlCqScvUwrOOM8eGa_CS',
+            piece: 'https://lh3.googleusercontent.com/d/1OnoSkrqSprHhRpAS6Axsf6OQrFDjkZQr',
+            full: 'https://lh3.googleusercontent.com/d/1n7tdhbr-05Ce-1sywncBJBtGkWvJMaA3',
+            // https://drive.google.com/file/d/1n7tdhbr-05Ce-1sywncBJBtGkWvJMaA3/view?usp=drive_link
+            charname: 'Iku Nagae',
+            title: 'Beautiful Scarlet Cloth',
+            links: {vk: {name: 'АкайМак', url: 'https://vk.com/club194747571'}},
+            color: 'd7a8ff',
+            stroke: 'iku'
+        },
+        3: {
+            name: 'Nerosik',
+            sprite: 'https://en.touhouwiki.net/images/0/00/Th11Satori.png',
+            piece: 'https://lh3.googleusercontent.com/d/1JCFF98ByokJGi3-ZSQ2yNiXvpGHipBYG',
+            full: 'https://lh3.googleusercontent.com/d/1-_JzCxBLhN_LgKk-VlHYH5JN8UyXSLuW',
+            // https://drive.google.com/file/d/1-_JzCxBLhN_LgKk-VlHYH5JN8UyXSLuW/view?usp=drive_link
+            charname: 'Satori Komeiji',
+            title: 'The Girl Even the Vengeful Spirits Fear',
+            links: {
+                twitter: {name: 'Nerosik', url: 'https://twitter.com/_Nerosik'},
+                instagram: {name: '_nerosik', url: 'https://www.instagram.com/_nerosik'}
+            },
+            color: 'ffa0fc',
+            stroke: 'satori'
+        }
+        // 11: {
+        //     name: 'name 11',
+        //     links: {twitter: {name: 'twitter name 11', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}},
+        //     color: 'f18e17'
+        // },
+        // 12: {
+        //     name: 'name 12',
+        //     links: {twitter: {name: 'twitter name 12', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}},
+        //     color: 'fdbf0c'
+        // }
+    }
+
+    const clickArea = document.getElementById('click-area');
+    const logo = document.getElementById('logo');
+    const wheel = document.getElementById('wheel');
+    const leftHalf = document.getElementById('left-half');
+    const rightHalf = document.getElementById('right-half');
+    const bg = document.getElementById('background');
+
+    $(window).on('load', function() {
+        $('#loader').addClass('hidden-smooth')
+    });
+
+    function clearInnerHTML(){
+        $('#links a').remove()
+    }
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            } 
+        }
+        return "";
+    }
+
+    var zoomed = false;
+    var visibleVidget = false;
+    var fullVisible = false;
+    var tutorialVisible = false;
+    var rotationLocked = false;
+
+    $( document ).ready(function(event) {
+
+        // ========================== SWIPES ==================================
+        // ========================== SWIPES ==================================
+        // ========================== SWIPES ==================================
+        var touchstartX = 0;
+        var touchendX = 0;
+        var touchstartY = 0;
+        var touchendY = 0;
+
+        var elementOffset = 0
+        var elementX =      0
+        var elementY =      0
+        var elementWidth = 0
+        var elementHeight = 0
+
+        // Обработка события начала касания
+        $("#click-area, #right-half, #full-image").on('touchstart', function(event) {
+            touchstartX = event.originalEvent.touches[0].pageX;
+            touchstartY = event.originalEvent.touches[0].pageY;
+        });
+
+        // Обработка события завершения касания
+        $("#click-area, #right-half, #full-image").on('touchend', function(event) {
+            touchendX = event.originalEvent.changedTouches[0].pageX;
+            touchendY = event.originalEvent.changedTouches[0].pageY;
+
+            elementY = event.originalEvent.changedTouches[0].pageY - $('#click-area').offset().top;
+            elementHeight = $('#click-area').height();
+            elementX = event.originalEvent.changedTouches[0].pageX - $('#click-area').offset().left;
+            elementWidth = $('#click-area').width();
+            handleGesture($(this)[0].id == 'click-area', $(this)[0].id == 'right-half');
+        });
+
+        // Обработка свайпов
+        function handleGesture(isWheelTap, isArtistInfoTap, isFullOpened) {
+            if (Math.abs(touchendX - touchstartX) < Math.abs(touchstartY - touchendY) && $("#full-image").hasClass("hidden-smooth") && isWheelTap){
+                
+                var leftPart = elementX < elementWidth/2
+
+                if (touchendY < touchstartY) {
+                    clickedButton(1 * leftPart ? -1 : 1)
+                }
+
+                if (touchendY > touchstartY) {
+                    clickedButton(-1 * leftPart ? 1 : -1)
+                }
+            }else if ($("#full-image").hasClass("visible-smooth")){
+                if (Math.abs(touchendX - touchstartX) < Math.abs(touchstartY - touchendY)){
+                    return
+                }
+
+                if (touchendX < touchstartX) {
+                    // clickedButton(-1 * isArtistInfoTap ? -1 : 1)
+                    clickedButton(1)
+                }
+
+                if (touchendX > touchstartX) {
+                    clickedButton(-1)
+                    // clickedButton(1 * isArtistInfoTap ? 1 : -1)
+                }
+            }
+            else{
+                if (Math.abs(touchendX - touchstartX) < Math.abs(touchstartY - touchendY)){
+                    return
+                }
+
+                var lowerPart = elementY < elementHeight/2 
+
+                if (touchendX < touchstartX) {
+                    clickedButton(1 * lowerPart ? 1 : -1 * isArtistInfoTap ? 1 : -1)
+                }
+
+                if (touchendX > touchstartX) {
+                    clickedButton(-1 * lowerPart ? -1 : 1 * isArtistInfoTap ? -1 : 1)
+                }
+            }
+        }
+        // ========================== SWIPES ==================================
+        // ========================== SWIPES ==================================
+        // ========================== SWIPES ==================================
+
+        $('#name').html(`<h1>${artists[1]['name']}</h1>`)
+        rightHalf.style.backgroundColor = `#${artists[1]['color']}`
+        bg.style.backgroundColor = `#${artists[1]['color']}`
+        $('#sprite').attr('src', artists[1]['sprite'])
+        $('#full-image img').attr('src', artists[1]['full'])
+        var strokeColor = artists[1]['stroke']
+        $('#char-name').addClass(artists[1]['stroke'])
+        $('#icons').addClass(`${artists[1]['stroke']}-shadow`)
+        $('#right-half').addClass(`${artists[1]['stroke']}-shadow-here`)
+        $('.artist-info').addClass(`${artists[1]['stroke']}-shadow-here`)
+
+        clearInnerHTML()
+        for (const [key, value] of Object.entries(artists[1]['links'])) {
+            // <img id="wheel" src="https://lh3.googleusercontent.com/d/1GFSDumrlYGryTuOhgqZwEB2_BhE6uhJQ" alt="Крутящееся изображение">
+            $('#links').append(`<a href="${value['url']}" target="_blank"><i class='fab fa-${key}'></i>${value['name']}</a>`)
+        }
+        for (const [key, value] of Object.entries(artists)) {
+            $('#wheel').append(`<img id="wheel-${value['stroke']}" class="wheel-one-place" src="${value['piece']}" alt="Крутящееся изображение">`)
+            $('.image-loader').append(`<img src="${value['sprite']}" />`)
+            $('.image-loader').append(`<img src="${value['full']}" />`)
+        }
+
+        if (getCookie('tutorialed7') == 'True'){
+            $('.tutorial').addClass('hidden')
+            $('.tutorial').addClass('hidden-smooth')
+        }
+        else{
+            tutorialVisible = true
+        }
+
+    });
+
+    var el, rot = 0;
+    const numberOfSectors = 10;
+
+    const scale = 1.4
+
+    function zoom(){
+        zoomed = !zoomed
+
+        if (zoomed){
+            $('#click-area').addClass('zoomed')
+            $('#zoom-icon').html('zoom_out')
+            clickArea.style.transform = ("scale(" + scale + ") translateY(35%)");
+            // logo.style.transform = ("scale(" + scale + ")");
+            console.log('sihfsiudgfsd')
+            $('.wheel-one-place').css('transform', ("rotate( " + rot + "deg )" + (zoomed ? " scale(" + scale + ")" : "")))
+        }
+        else{
+            $('#click-area').removeClass('zoomed')
+            $('#zoom-icon').html('zoom_in')
+            clickArea.style.transform = ("scale(1)");
+            // logo.style.transform = ("scale(1)");
+            $('.wheel-one-place').css('transform', ("rotate( " + rot + "deg )" + (zoomed ? " scale(1)" : "")))
+        }
+
+        $('.wheel-one-place').css('transform', ("rotate( " + rot + "deg )" + (zoomed ? " scale(" + scale + ")" : "")))
+
+        // wheel.style.transform = ("rotate( " + rot + "deg )" + (zoomed ? " scale(" + scale + ")" : ""));
+    }
+    function screenRotation(){
+        rotationLocked = !rotationLocked
+
+        if (rotationLocked){
+            $('#rotation-icon').html('screen_lock_rotation')
+        }
+        else{
+            $('#rotation-icon').html('screen_rotation')
+        }
+    }
+
+    function rotateContainer(){
+        var rotation = rot % 360
+        var index = Math.ceil((rotation < 0 ? 360 - (-rotation) : rotation) / (360/numberOfSectors) + 1)
+        
+        $('.wheel-one-place').css('transform', ("rotate( " + rot + "deg )" + (zoomed ? " scale(" + scale + ")" : "scale(1)")))
+
+        var iku_translate = 25
+        var seiga_translate = 20
+        var suwako_translate = 25
+
+        if ($( window ).width() < 1200){
+            var iku_translate = 35
+            var seiga_translate = 38
+            var suwako_translate = 35
+        }
+
+        if (index == 4 && !rotationLocked){
+            if (zoomed){
+                $('.inner-img-container').css('transform', `translateX(${iku_translate}%) translateY(-35%) rotate(-90deg)`)
+            }
+            else{
+                $('.inner-img-container').css('transform', `rotate(-90deg)`)
+            }
+            $('#logo').css('transform', 'rotate(90deg)')
+        }
+        else if (index == 7 && !rotationLocked){
+            if (zoomed){
+                $('.inner-img-container').css('transform', `translateX(-${seiga_translate}%) translateY(-22%) rotate(72deg)`)
+            }
+            else{
+                $('.inner-img-container').css('transform', `rotate(72deg)`)
+            }
+            $('#logo').css('transform', 'rotate(-72deg)')
+        }
+        else if (index == 9 && !rotationLocked){
+            if (zoomed){
+                $('.inner-img-container').css('transform', `translateX(-${suwako_translate}%) translateY(-22%) rotate(72deg)`)
+            }
+            else{
+                $('.inner-img-container').css('transform', `rotate(72deg)`)
+            }
+            $('#logo').css('transform', 'rotate(-72deg)')
+        }
+        else{
+            $('.inner-img-container').css('transform', '')
+            $('#logo').css('transform', '')
+        }
+    }
+
+    $(document).on('click', '.zoom', function (e) {
+        zoom()
+        rotateContainer()
+    });
+    $(document).on('click', '.screen-rotation', function (e) {
+        screenRotation()
+        rotateContainer()
+    });
+    $(document).on('click', '#discord', function (e) {
+        visibleVidget = !visibleVidget
+
+        if (!visibleVidget){
+            $('#discord-widget').addClass('hidden-smooth')
+            $('#discord-widget').removeClass('visible-smooth')
+        }
+        else{
+            $('#discord-widget').removeClass('hidden-smooth')
+            $('#discord-widget').addClass('visible-smooth')
+        }
+    });
+
+    function getImageAngle() {
+        var st = window.getComputedStyle(wheel, null);
+        var tm = st.getPropertyValue("-webkit-transform") ||
+                 st.getPropertyValue("-moz-transform") ||
+                 st.getPropertyValue("-ms-transform") ||
+                 st.getPropertyValue("-o-transform") ||
+                 st.getPropertyValue("transform") ||
+                 "none";
+        if (tm != "none") {
+          var values = tm.split('(')[1].split(')')[0].split(',');
+          var angle = Math.round(Math.atan2(values[1],values[0]) * (180/Math.PI));
+          return angle
+        }
+        return 0;
+    }
+
+    function rotateThis(nR) {
+        
+        // nR = nR - (nR % (360/numberOfSectors))
+        
+        var aR;
+
+        rot = rot || 0; // if rot undefined or 0, make 0, else rot
+        aR = rot % 360;
+        if ( aR < 0 ) { aR += 360; }
+        if ( aR < 180 && (nR > (aR + 180)) ) { rot -= 360; }
+        if ( aR >= 180 && (nR <= (aR - 180)) ) { rot += 360; }
+        rot += (nR - aR) - (rot % (360/numberOfSectors));
+        
+        $('.wheel-one-place').css('transform', ("rotate( " + rot + "deg )" + (zoomed ? " scale(" + scale + ")" : "scale(1)")))
+        // wheel.style.transform = ("rotate( " + rot + "deg )" + (zoomed ? " scale(" + scale + ")" : ""));
+    }
+
+    function clickedButton(direction) {
+
+        // let imageRotationAngle = getImageAngle()
+        let imageRotationAngle = rot % 360
+        if (-180 >= imageRotationAngle && -360 <= imageRotationAngle){
+            imageRotationAngle += 360
+        }
+        // console.log(imageRotationAngle)
+        let newRotationAngle = imageRotationAngle - (360/numberOfSectors) * direction
+        rotateThis(newRotationAngle)
+
+        var rotation = rot % 360
+        var index = Math.ceil((rotation < 0 ? 360 - (-rotation) : rotation) / (360/numberOfSectors) + 1)
+
+        rotateContainer()
+
+        $('#name').html(`<h1>${artists[index]['name']}</h1>`)
+        rightHalf.style.backgroundColor = `#${artists[index]['color']}`
+        bg.style.backgroundColor = `#${artists[index]['color']}`
+        $('#sprite').attr('src', artists[index]['sprite'])
+        $('#full-image img').attr('src', artists[index]['full'])
+
+        $('#char-name').removeClass('kasen')
+        $('#char-name').removeClass('saki')
+        $('#char-name').removeClass('suwako')
+        $('#char-name').removeClass('seiga')
+        $('#char-name').removeClass('cirno')
+        $('#char-name').removeClass('doremy')
+        $('#char-name').removeClass('iku')
+        $('#char-name').removeClass('satori')
+        $('#char-name').removeClass('sekibanki')
+        $('#char-name').removeClass('tojiko')
+        $('#char-name').addClass(artists[index]['stroke'])
+        $('#icons').removeClass('kasen-shadow')
+        $('#icons').removeClass('saki-shadow')
+        $('#icons').removeClass('suwako-shadow')
+        $('#icons').removeClass('seiga-shadow')
+        $('#icons').removeClass('cirno-shadow')
+        $('#icons').removeClass('doremy-shadow')
+        $('#icons').removeClass('iku-shadow')
+        $('#icons').removeClass('satori-shadow')
+        $('#icons').removeClass('sekibanki-shadow')
+        $('#icons').removeClass('tojiko-shadow')
+        $('#icons').addClass(`${artists[index]['stroke']}-shadow`)
+        $('#right-half').removeClass('kasen-shadow-here')
+        $('#right-half').removeClass('saki-shadow-here')
+        $('#right-half').removeClass('suwako-shadow-here')
+        $('#right-half').removeClass('seiga-shadow-here')
+        $('#right-half').removeClass('cirno-shadow-here')
+        $('#right-half').removeClass('doremy-shadow-here')
+        $('#right-half').removeClass('iku-shadow-here')
+        $('#right-half').removeClass('satori-shadow-here')
+        $('#right-half').removeClass('sekibanki-shadow-here')
+        $('#right-half').removeClass('tojiko-shadow-here')
+        $('#right-half').addClass(`${artists[index]['stroke']}-shadow-here`)
+        $('.artist-info').removeClass('kasen-shadow-here')
+        $('.artist-info').removeClass('saki-shadow-here')
+        $('.artist-info').removeClass('suwako-shadow-here')
+        $('.artist-info').removeClass('seiga-shadow-here')
+        $('.artist-info').removeClass('cirno-shadow-here')
+        $('.artist-info').removeClass('doremy-shadow-here')
+        $('.artist-info').removeClass('iku-shadow-here')
+        $('.artist-info').removeClass('satori-shadow-here')
+        $('.artist-info').removeClass('sekibanki-shadow-here')
+        $('.artist-info').removeClass('tojiko-shadow-here')
+        $('.artist-info').addClass(`${artists[index]['stroke']}-shadow-here`)
+
+        $('#char-name').html(`<h1>${artists[index]['charname']}</h1> <p>${artists[index]['title']}</p>`)
+
+        clearInnerHTML()
+        for (const [key, value] of Object.entries(artists[index]['links'])) {
+            $('#links').append(`<a href="${value['url']}" target="_blank"><i class='fab fa-${key}'></i>${value['name']}</a>`)
+        }
+
+    }
+
+    $(document).on('click', '.next', function (e) {
+        clickedButton(1)
+    });
+    $(document).on('click', '.prev', function (e) {
+        clickedButton(-1)
+    });
+
+    $(document).on('click', '.tutorial', function (e) {
+        $('.tutorial').addClass('hidden-smooth')
+        tutorialVisible = false
+        document.cookie = "tutorialed7=True";
+    });
+
+    function full(){
+        fullVisible = !fullVisible
+        
+        if (!fullVisible){
+            $('.full-image').addClass('hidden-smooth')
+            $('.full-image').removeClass('visible-smooth')
+        }
+        else{
+            $('.full-image').removeClass('hidden-smooth')
+            $('.full-image').addClass('visible-smooth')
+        }
+    }
+
+    $(document).on('click', '.full', function (e) {
+        full()
+    });
+    $(document).on('click', '.info', function (e) {
+        tutorialVisible = true
+        
+        $('.tutorial').removeClass('hidden')
+        $('.tutorial').removeClass('hidden-smooth')
+    });
+    $(document).on('click', '.full-image', function (e) {
+        fullVisible = !fullVisible
+        
+        if (!fullVisible){
+            $('.full-image').addClass('hidden-smooth')
+            $('.full-image').removeClass('visible-smooth')
+        }
+    });
+
+    document.onkeydown = function(e) {
+        switch(e.which) {
+            case 37: // left
+            clickedButton(-1)
+            break;
+
+            case 38: // up
+            full()
+            break;
+
+            case 39: // right
+            clickedButton(1)
+            break;
+
+            case 40: // down
+            zoom()
+            break;
+
+            default: return; // exit this handler for other keys
+        }
+        e.preventDefault(); // prevent the default action (scroll / move caret)
+    };
+</script>
+</body>
+</html>
