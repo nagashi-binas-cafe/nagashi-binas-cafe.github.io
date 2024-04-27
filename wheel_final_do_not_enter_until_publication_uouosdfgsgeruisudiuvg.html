@@ -1330,6 +1330,8 @@
 </div>
 
 <script>
+    // document.addEventListener('contextmenu', event => event.preventDefault());
+
     const artists = {
         2: {
             name: 'Borsh',
@@ -1623,7 +1625,7 @@
             $('#links').append(`<a href="${value['url']}" target="_blank"><i class='fab fa-${key}'></i>${value['name']}</a>`)
         }
         for (const [key, value] of Object.entries(artists)) {
-            $('#wheel').append(`<img id="wheel-${value['stroke']}" class="wheel-one-place" src="${value['piece']}" alt="Крутящееся изображение">`)
+            $('#wheel').append(`<img id="wheel-${value['stroke']}" class="wheel-one-place" src="${value['piece']}" alt="Крутящееся изображение" oncontextmenu="return false;">`)
             $('.image-loader').append(`<img src="${value['sprite']}" />`)
             $('.image-loader').append(`<img src="${value['full']}" />`)
         }
