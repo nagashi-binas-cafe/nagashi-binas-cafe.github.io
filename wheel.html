@@ -86,8 +86,16 @@
         width: 100%;
         height: 100%;
         object-fit: contain;
-        position: absolute;
+        position: relative;
         transform-origin: center;
+    }
+    .wheel-one-place{ /*===============================================*/
+        position: absolute;
+        top: 0;
+        left: 0%;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
     }
     #logo{
         position: absolute;
@@ -223,7 +231,9 @@
             /* -webkit-text-stroke: 1px gray; */
             /* text-shadow: 0px 2px 10px rgba(0,0,0,1); */
         }
-        .screen-rotation{
+        .screen-rotation{         
+            width: 40px;
+            height: 40px;
             position: absolute;
             bottom: 0;
             left: calc(50% - 20px);
@@ -265,6 +275,10 @@
             width: 40px;
             height: 40px;
             transform: scale(1.2);
+        }
+        .wheel-one-place{
+            width: 100%;
+            left: 0;
         }
     }
 
@@ -1004,10 +1018,78 @@
         transform: rotate(90deg);
     }
 
+    #wheel-kasen{
+        z-index: 1;
+    }
+    #wheel-saki{
+        z-index: 2;
+    }
+    #wheel-suwako{
+        z-index: 3;
+    }
+    #wheel-seiga{
+        z-index: 1;
+    }
+    #wheel-doremy{
+        z-index: 2;
+    }
+
+    #loader{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        align-items: middle;
+        z-index: 9999;
+        background-color: #000;
+        color: white;
+        font-family: 'Montserrat', sans-serif;
+    }
+    #loader *{
+        display: block;
+    }
+    #loader-container{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin: -50px 0 0 -145px;
+        width: 290px;
+        /* width: 50%; */
+    }
+    #loader-container *{
+        display: flex;
+        width: 290px;
+        text-align: center;
+    }
+    .loader {
+        --c: white;
+        width: fit-content;
+        font-weight: bold;
+        font-family: monospace;
+        font-size: 30px;
+        color: #0000;
+        overflow: hidden;
+        text-shadow: 0 0 var(--c),23ch 0 var(--c);
+        animation: l6 5s infinite linear;
+    }
+    .loader:before {
+        content:"Girls are praying...";
+        font-family: 'Montserrat', sans-serif;
+    }
+    @keyframes l6 {to{text-shadow:-23ch 0 var(--c),0ch 0 var(--c)}}
+
 </style>
 </head>
 <body>
 <div class="container">
+
+    <div id="loader">
+        <div id="loader-container">
+            <div class="loader"></div>
+            <span>... and loading. Please wait serenely...</span>
+        </div>
+    </div>
 
     <div class="tutorial">
         <div class="tutorial-container">
@@ -1170,9 +1252,12 @@
             </div>
         </div>
         <div id="click-area">
-            <div class="inner-img-container">
-                <img id="wheel" src="https://lh3.googleusercontent.com/d/1GFSDumrlYGryTuOhgqZwEB2_BhE6uhJQ" alt="Крутящееся изображение">
-                <img id="logo" src="https://lh3.googleusercontent.com/d/1JjgqnhYnpwr97w1uSl5-Lce_heplI-Fd" alt="Лого">
+            <div class="inner-img-container" id="images-here">
+                <div id="wheel">
+                    <img class="wheel-one-place" src="https://lh3.googleusercontent.com/d/1ljGrd5BP_oxopDcSiktZes7azm9kVM8o" alt="Крутящееся изображение">
+                    <!-- https://drive.google.com/file/d/1ljGrd5BP_oxopDcSiktZes7azm9kVM8o/view?usp=sharing -->
+                    <!-- <img id="logo" src="https://lh3.googleusercontent.com/d/1JjgqnhYnpwr97w1uSl5-Lce_heplI-Fd" alt="Лого"> -->
+                </div>
             </div>
         </div>
         <div id="char-name">
@@ -1245,14 +1330,19 @@
 </div>
 
 <script>
+    // document.addEventListener('contextmenu', event => event.preventDefault());
+
     const artists = {
         2: {
             name: 'Borsh',
             sprite: 'https://en.touhouwiki.net/images/5/58/Th14Sekibanki.png',
+            piece: 'https://lh3.googleusercontent.com/d/13UkJvibPhioM9qeMc5Hqi9q-W2EAzO8L',
+            full: 'https://lh3.googleusercontent.com/d/10BmCC_NoeTV6duesAIYWrcaD7sdQ7c4A',
+            // https://drive.google.com/file/d/10BmCC_NoeTV6duesAIYWrcaD7sdQ7c4A/view?usp=drive_link
             charname: 'Sekibanki',
             title: 'The Rokurokubi Horror',
             links: {
-                twitter: {name: 'YaVsralas', url: 'https://twitter.com/vsralas?t=nLUq-2M9UydX3CMEUats9Q&s=09'}
+                twitter: {name: 'YaVsralas', url: 'https://twitter.com/vsralas'}
             },
             color: 'ffa0ba',
             stroke: 'sekibanki'
@@ -1260,10 +1350,13 @@
         1: {
             name: 'IamSuicc',
             sprite: 'https://en.touhouwiki.net/images/f/ff/Th155Kasen.png',
+            piece: 'https://lh3.googleusercontent.com/d/1VDiRO82y4kPwiX2b6-Tclq03QBdJqhUD',
+            full: 'https://lh3.googleusercontent.com/d/1UGNIRzN80DPkLfG1w_dSHbNsr6AI7rrM',
+            // https://drive.google.com/file/d/1UGNIRzN80DPkLfG1w_dSHbNsr6AI7rrM/view?usp=drive_link
             charname: 'Kasen Ibaraki',
             title: 'The One-Armed, Horned Hermit',
             links: {
-                vk: {name: 'reincarnationkages', url: 'https://vk.com/reincarnationkages'},
+                twitter: {name: 'KageHearn', url: 'https://twitter.com/CoffeeKageHearn'},
             },
             color: 'ffa8a8',
             stroke: 'kasen'
@@ -1271,11 +1364,15 @@
         10: {
             name: 'Collectollider',
             sprite: 'https://en.touhouwiki.net/images/5/5b/Th19Saki.png',
+            piece: 'https://lh3.googleusercontent.com/d/19o95BBF0F5fOstxS75pMN2xqDnl7gLzt',
+            full: 'https://lh3.googleusercontent.com/d/1RtN0V57oRP6jV4G2hM9hFkQWfi3ysmpt',
+            // https://drive.google.com/file/d/1RtN0V57oRP6jV4G2hM9hFkQWfi3ysmpt/view?usp=drive_link
             charname: 'Saki Kurokoma',
             title: 'Matriarch of the Keiga Family',
             links: {
-                twitter: {name: 'collidellector', url: 'https://twitter.com/collidellector'},
+                vk: {name: 'MelanieTheBobcat Arts', url: 'https://vk.com/collectollider'},
                 pixiv: {name: 'Collectollider', url: 'https://www.pixiv.net/en/users/8515429'},
+                twitter: {name: 'collidellector', url: 'https://twitter.com/collidellector'},
             },
             color: 'ffbfa0',
             stroke: 'saki'
@@ -1283,6 +1380,9 @@
         9: {
             name: 'KateDragna',
             sprite: 'https://en.touhouwiki.net/images/9/9a/Th10Suwako.png',
+            piece: 'https://lh3.googleusercontent.com/d/1QfTwcSHIo4ckDcTzW70Jfu1WW2HoqsFn',
+            full: 'https://lh3.googleusercontent.com/d/1B69w1GiGVHtmvH_87EziNJvHb1rHWDGA',
+            // https://drive.google.com/file/d/1B69w1GiGVHtmvH_87EziNJvHb1rHWDGA/view?usp=drive_link
             charname: 'Suwako Moriya',
             title: 'The Highest of Indigenous Gods',
             links: {
@@ -1295,6 +1395,9 @@
         8: {
             name: 'shiratori',
             sprite: 'https://en.touhouwiki.net/images/0/07/Th13Tojiko.png',
+            piece: 'https://lh3.googleusercontent.com/d/1CoOJ2-8Pj_KedOEnBJeBsWAZse0oLvnh',
+            full: 'https://lh3.googleusercontent.com/d/1qPAm5Yy2nNv9gbwhhp6y4zg8kLBxyZtj',
+            // https://drive.google.com/file/d/1qPAm5Yy2nNv9gbwhhp6y4zg8kLBxyZtj/view?usp=drive_link
             charname: 'Soga no Tojiko',
             title: 'Ghost of the Descendant of the Gods',
             links: {twitter: {name: 'shiratori-p', url: 'https://twitter.com/sAshiratori'}},
@@ -1304,15 +1407,24 @@
         7: {
             name: 'Dungeon Toaster',
             sprite: 'https://en.touhouwiki.net/images/b/b0/Th13Seiga.png',
+            piece: 'https://lh3.googleusercontent.com/d/1XMuOy9ojXAZ-kmWXP6sPwEcEy6LlEaRm',
+            full: 'https://lh3.googleusercontent.com/d/1FPTgSZrYRsmc2bXJxL4bEcWJRPtWoMrD',
+            // https://drive.google.com/file/d/1FPTgSZrYRsmc2bXJxL4bEcWJRPtWoMrD/view?usp=drive_link
             charname: 'Seiga Kaku',
             title: 'The Wicked Hermit Who Passes Through Walls',
-            links: {twitter: {name: 'Dungeon Toaster', url: 'https://twitter.com/OrdinaryRizzych'}},
+            links: {
+                twitter: {name: 'Dungeon Toaster', url: 'https://twitter.com/OrdinaryRizzych'},
+                pixiv: {name: 'DungeonToaster', url: 'https://www.pixiv.net/en/users/28683225'}
+            },
             color: 'a4ffe2',
             stroke: 'seiga'
         },
         6: {
             name: 'Mamoka Migatte',
             sprite: 'https://en.touhouwiki.net/images/d/d5/Th14Cirno.png',
+            piece: 'https://lh3.googleusercontent.com/d/17_canKHZdAt7gCZl0F0YletwWpnqylkR',
+            full: 'https://lh3.googleusercontent.com/d/1FDwRTPSVSjy4OSOgbjmaUiT6Bn6z9j69',
+            // https://drive.google.com/file/d/1FDwRTPSVSjy4OSOgbjmaUiT6Bn6z9j69/view?usp=drive_link
             charname: 'Cirno',
             title: 'Fairy of the Ice',
             links: {
@@ -1325,6 +1437,9 @@
         5: {
             name: 'klabisot',
             sprite: 'https://en.touhouwiki.net/images/5/5e/Th15Doremy.png',
+            piece: 'https://lh3.googleusercontent.com/d/1NEPhBd0q3VgKWmMvYFBxaBGHj0JhV13t',
+            full: 'https://lh3.googleusercontent.com/d/1Ej3RhcsT9rQt_DxAsmXpi9wDSSsN5DL3',
+            // https://drive.google.com/file/d/1NEPhBd0q3VgKWmMvYFBxaBGHj0JhV13t/view?usp=drive_link
             charname: 'Doremy Sweet',
             title: 'Ruler of Dreams',
             links: {
@@ -1337,19 +1452,26 @@
         4: {
             name: 'Aka-Mak',
             sprite: 'https://lh3.googleusercontent.com/d/12Np8zLFWcKvfnlCqScvUwrOOM8eGa_CS',
+            piece: 'https://lh3.googleusercontent.com/d/1OZ2h7ZjXAQ0ciG6WUDsk5HsvMvy6zLnR',
+            full: 'https://lh3.googleusercontent.com/d/1n7tdhbr-05Ce-1sywncBJBtGkWvJMaA3',
+            // https://drive.google.com/file/d/1OZ2h7ZjXAQ0ciG6WUDsk5HsvMvy6zLnR/view?usp=drive_link
             charname: 'Iku Nagae',
             title: 'Beautiful Scarlet Cloth',
-            links: {vk: {name: 'АкайМак', url: 'https://vk.com/club194747571'}},
+            links: {vk: {name: 'АкайМак', url: 'https://vk.com/akai_mak'}},
             color: 'd7a8ff',
             stroke: 'iku'
         },
         3: {
             name: 'Nerosik',
             sprite: 'https://en.touhouwiki.net/images/0/00/Th11Satori.png',
+            piece: 'https://lh3.googleusercontent.com/d/1JCFF98ByokJGi3-ZSQ2yNiXvpGHipBYG',
+            full: 'https://lh3.googleusercontent.com/d/1-_JzCxBLhN_LgKk-VlHYH5JN8UyXSLuW',
+            // https://drive.google.com/file/d/1-_JzCxBLhN_LgKk-VlHYH5JN8UyXSLuW/view?usp=drive_link
             charname: 'Satori Komeiji',
             title: 'The Girl Even the Vengeful Spirits Fear',
             links: {
                 twitter: {name: 'Nerosik', url: 'https://twitter.com/_Nerosik'},
+                pixiv: {name: 'Nerosik', url: 'https://www.pixiv.net/en/users/84654050'},
                 instagram: {name: '_nerosik', url: 'https://www.instagram.com/_nerosik'}
             },
             color: 'ffa0fc',
@@ -1373,6 +1495,10 @@
     const leftHalf = document.getElementById('left-half');
     const rightHalf = document.getElementById('right-half');
     const bg = document.getElementById('background');
+
+    $(window).on('load', function() {
+        $('#loader').addClass('hidden-smooth')
+    });
 
     function clearInnerHTML(){
         $('#links a').remove()
@@ -1486,7 +1612,7 @@
         rightHalf.style.backgroundColor = `#${artists[1]['color']}`
         bg.style.backgroundColor = `#${artists[1]['color']}`
         $('#sprite').attr('src', artists[1]['sprite'])
-        $('#full-image img').attr('src', artists[1]['sprite'])
+        $('#full-image img').attr('src', artists[1]['full'])
         var strokeColor = artists[1]['stroke']
         $('#char-name').addClass(artists[1]['stroke'])
         $('#icons').addClass(`${artists[1]['stroke']}-shadow`)
@@ -1495,13 +1621,16 @@
 
         clearInnerHTML()
         for (const [key, value] of Object.entries(artists[1]['links'])) {
+            // <img id="wheel" src="https://lh3.googleusercontent.com/d/1GFSDumrlYGryTuOhgqZwEB2_BhE6uhJQ" alt="Крутящееся изображение">
             $('#links').append(`<a href="${value['url']}" target="_blank"><i class='fab fa-${key}'></i>${value['name']}</a>`)
         }
         for (const [key, value] of Object.entries(artists)) {
+            $('#wheel').append(`<img id="wheel-${value['stroke']}" class="wheel-one-place" src="${value['piece']}" alt="Крутящееся изображение" oncontextmenu="return false;">`)
             $('.image-loader').append(`<img src="${value['sprite']}" />`)
+            $('.image-loader').append(`<img src="${value['full']}" />`)
         }
 
-        if (getCookie('tutorialed7') == 'True'){
+        if (getCookie('tutorialed8') == 'True'){
             $('.tutorial').addClass('hidden')
             $('.tutorial').addClass('hidden-smooth')
         }
@@ -1523,16 +1652,21 @@
             $('#click-area').addClass('zoomed')
             $('#zoom-icon').html('zoom_out')
             clickArea.style.transform = ("scale(" + scale + ") translateY(35%)");
-            logo.style.transform = ("scale(" + scale + ")");
+            // logo.style.transform = ("scale(" + scale + ")");
+            console.log('sihfsiudgfsd')
+            $('.wheel-one-place').css('transform', ("rotate( " + rot + "deg )" + (zoomed ? " scale(" + scale + ")" : "")))
         }
         else{
             $('#click-area').removeClass('zoomed')
             $('#zoom-icon').html('zoom_in')
             clickArea.style.transform = ("scale(1)");
-            logo.style.transform = ("scale(1)");
+            // logo.style.transform = ("scale(1)");
+            $('.wheel-one-place').css('transform', ("rotate( " + rot + "deg )" + (zoomed ? " scale(1)" : "")))
         }
 
-        wheel.style.transform = ("rotate( " + rot + "deg )" + (zoomed ? " scale(" + scale + ")" : ""));
+        $('.wheel-one-place').css('transform', ("rotate( " + rot + "deg )" + (zoomed ? " scale(" + scale + ")" : "")))
+
+        // wheel.style.transform = ("rotate( " + rot + "deg )" + (zoomed ? " scale(" + scale + ")" : ""));
     }
     function screenRotation(){
         rotationLocked = !rotationLocked
@@ -1548,31 +1682,43 @@
     function rotateContainer(){
         var rotation = rot % 360
         var index = Math.ceil((rotation < 0 ? 360 - (-rotation) : rotation) / (360/numberOfSectors) + 1)
+        
+        $('.wheel-one-place').css('transform', ("rotate( " + rot + "deg )" + (zoomed ? " scale(" + scale + ")" : "scale(1)")))
+
+        var iku_translate = 25
+        var seiga_translate = 20
+        var suwako_translate = 25
+
+        if ($( window ).width() < 1200){
+            var iku_translate = 35
+            var seiga_translate = 38
+            var suwako_translate = 35
+        }
 
         if (index == 4 && !rotationLocked){
             if (zoomed){
-                $('.inner-img-container').css('transform', 'translateX(25%) translateY(-35%) rotate(-90deg)')
+                $('.inner-img-container').css('transform', `translateX(${iku_translate}%) translateY(-35%) rotate(-90deg)`)
             }
             else{
-                $('.inner-img-container').css('transform', 'rotate(-90deg)')
+                $('.inner-img-container').css('transform', `rotate(-90deg)`)
             }
             $('#logo').css('transform', 'rotate(90deg)')
         }
         else if (index == 7 && !rotationLocked){
             if (zoomed){
-                $('.inner-img-container').css('transform', 'translateX(-25%) translateY(-22%) rotate(72deg)')
+                $('.inner-img-container').css('transform', `translateX(-${seiga_translate}%) translateY(-22%) rotate(72deg)`)
             }
             else{
-                $('.inner-img-container').css('transform', 'rotate(72deg)')
+                $('.inner-img-container').css('transform', `rotate(72deg)`)
             }
             $('#logo').css('transform', 'rotate(-72deg)')
         }
         else if (index == 9 && !rotationLocked){
             if (zoomed){
-                $('.inner-img-container').css('transform', 'translateX(-25%) translateY(-22%) rotate(72deg)')
+                $('.inner-img-container').css('transform', `translateX(-${suwako_translate}%) translateY(-22%) rotate(72deg)`)
             }
             else{
-                $('.inner-img-container').css('transform', 'rotate(72deg)')
+                $('.inner-img-container').css('transform', `rotate(72deg)`)
             }
             $('#logo').css('transform', 'rotate(-72deg)')
         }
@@ -1632,7 +1778,8 @@
         if ( aR >= 180 && (nR <= (aR - 180)) ) { rot += 360; }
         rot += (nR - aR) - (rot % (360/numberOfSectors));
         
-        wheel.style.transform = ("rotate( " + rot + "deg )" + (zoomed ? " scale(" + scale + ")" : ""));
+        $('.wheel-one-place').css('transform', ("rotate( " + rot + "deg )" + (zoomed ? " scale(" + scale + ")" : "scale(1)")))
+        // wheel.style.transform = ("rotate( " + rot + "deg )" + (zoomed ? " scale(" + scale + ")" : ""));
     }
 
     function clickedButton(direction) {
@@ -1655,7 +1802,7 @@
         rightHalf.style.backgroundColor = `#${artists[index]['color']}`
         bg.style.backgroundColor = `#${artists[index]['color']}`
         $('#sprite').attr('src', artists[index]['sprite'])
-        $('#full-image img').attr('src', artists[index]['sprite'])
+        $('#full-image img').attr('src', artists[index]['full'])
 
         $('#char-name').removeClass('kasen')
         $('#char-name').removeClass('saki')
@@ -1721,7 +1868,7 @@
     $(document).on('click', '.tutorial', function (e) {
         $('.tutorial').addClass('hidden-smooth')
         tutorialVisible = false
-        document.cookie = "tutorialed7=True";
+        document.cookie = "tutorialed8=True";
     });
 
     function full(){
