@@ -138,7 +138,7 @@
         height: 100%;
     }
 
-    .zoom, .prev, .next, .full, .info, .screen-rotation{
+    .zoom, .prev, .next, .full, .info, .shadow, .screen-rotation{
         width: 75px;
         height: 75px;
         transition: all 0.3s ease; 
@@ -148,7 +148,7 @@
         border-radius: 38px;
         cursor: pointer;
     }
-    .zoom, .prev, .next, #discord, .full, .info, .screen-rotation{
+    .zoom, .prev, .next, #discord, .full, .info, .shadow, .screen-rotation{
         color: white;
         /* -webkit-text-stroke: 1px gray; */
         /* text-shadow: 0px 2px 10px rgba(0,0,0,1); */
@@ -183,9 +183,14 @@
         /* color: black; */
         cursor: pointer;
     }
-    .info{
+    .shadow{
         position: absolute;
         top: 250px;
+        right: 0;
+    }
+    .info{
+        position: absolute;
+        top: 345px;
         right: 0;
     }
     .screen-rotation{
@@ -193,7 +198,7 @@
         bottom: 0;
         left: calc(50% - 37.5px);
     }
-    .zoom:hover, #discord:hover, .full:hover, .info:hover, .screen-rotation:hover{
+    .zoom:hover, #discord:hover, .full:hover, .info:hover, .screen-rotation:hover, .shadow:hover{
         transform: scale(1.2);
     }
     .prev{
@@ -216,7 +221,7 @@
     }
     
     @media (max-width: 1200px) {
-        .zoom, .prev, .next, .full, .info{            
+        .zoom, .prev, .next, .full, .shadow, .info{            
             width: 40px;
             height: 40px;
             transition: all 0.3s ease; 
@@ -226,7 +231,7 @@
             border-radius: 38px;
             cursor: pointer;
         }
-        .zoom, .prev, .next, #discord, .full, .info{
+        .zoom, .prev, .next, #discord, .full, .info, .shadow{
             color: white;
             /* -webkit-text-stroke: 1px gray; */
             /* text-shadow: 0px 2px 10px rgba(0,0,0,1); */
@@ -267,9 +272,13 @@
             /* color: black; */
             cursor: pointer;
         }
-        .info{
+        .shadow{
             position: absolute;
             top: 185px;
+        }
+        .info{
+            position: absolute;
+            top: 255px;
         }
         .zoom:hover, #discord:hover, .full:hover, .info:hover{
             width: 40px;
@@ -403,8 +412,12 @@
         text-align: right;
     }
     .tutorial i{
+        display: inline-block;
         width: 40px;
         height: 27px;
+        line-height: 33px;
+        vertical-align: middle;
+        margin-bottom: 5px;
     }
     .tutorial .material-symbols-outlined{
         margin-bottom: 10px;
@@ -414,8 +427,10 @@
     }
     .tutorial span{
         vertical-align: middle;
-        line-height: 35px;
+        line-height: 32px;
         height: 27px;
+        margin-left: 15px;
+        margin-bottom: 5px;
     }
     .tutorial span.text{
         font-family: "Montserrat", sans-serif;
@@ -442,19 +457,42 @@
         visibility: hidden;
         top: -100vh;
     }
-    #arrow-forward{
+    .arrows{
         margin-left: 0;
     }
+    /* #shadow-icon{
+        margin-left: 0;
+    } */
     @media (max-width: 1200px) {
+        .tutorial i{
+            display: inline-block;
+            width: 25px;
+            height: 20px;
+        }
         .tutorial{
-            font-size: 11px;
+            font-size: 16px;
+        }
+        .tutorial i{
+            margin-bottom: 7px;
         }
         .tutorial .material-symbols-outlined{
-            margin-bottom: 10px;
+            margin: 0;
             margin-left: 10px;
-            margin-right: 5px;
-            margin-top: -10px;
-            font-size: 20px;
+            font-size: 25px;
+        }
+        .tutorial span{
+            vertical-align: middle;
+            line-height: 12px;
+            height: 20px;
+            margin-left: 15px;
+        }
+        .tutorial text{
+            display: inline-block;
+            padding-left: 10px;
+            margin-bottom: 15px;
+        }
+        .arrows{
+            margin-left: 0;
         }
         .tutorial br{
             visibility: hidden;
@@ -1079,6 +1117,10 @@
     }
     @keyframes l6 {to{text-shadow:-23ch 0 var(--c),0ch 0 var(--c)}}
 
+    .shadowed{
+        filter: brightness(25%)
+    }
+
 </style>
 </head>
 <body>
@@ -1107,6 +1149,12 @@
                 rotate_left
             </span></i><span class="text">Spin the wheel counterclockwise</span><br>
             <i><span class="material-symbols-outlined">
+                circle
+            </span></i>
+            <i><span class="material-symbols-outlined" id="shadow-icon">
+                ev_shadow
+            </span></i><span class="text">Enable/disable sector darken</span><br>
+            <i><span class="material-symbols-outlined">
                 screen_rotation
             </span></i><span class="text">Enable/disable personalised sector rotation</span><br>
             <i><span class="material-symbols-outlined">
@@ -1131,13 +1179,13 @@
             <i><span class="material-symbols-outlined">
                 arrow_back
             </span></i>
-            <i><span class="material-symbols-outlined" id="arrow-forward">
+            <i><span class="material-symbols-outlined arrows">
                 arrow_forward
             </span></i>
-            <i><span class="material-symbols-outlined" id="arrow-forward">
+            <i><span class="material-symbols-outlined arrows">
                 arrow_upward
             </span></i>
-            <i><span class="material-symbols-outlined" id="arrow-forward">
+            <i><span class="material-symbols-outlined arrows">
                 arrow_downward
             </span></i><span class="text">Spin the wheel</span><br>
 
@@ -1272,13 +1320,18 @@
             </button>
             <div id="discord" class="fab fa-discord"></div>
             <button class="full">
-                <i><span class="material-symbols-outlined icon-size" id="zoom-icon">
+                <i><span class="material-symbols-outlined icon-size">
                     image
                 </span></i>
             </button>
             <button class="info">
-                <i><span class="material-symbols-outlined icon-size" id="zoom-icon">
+                <i><span class="material-symbols-outlined icon-size">
                     info
+                </span></i>
+            </button>
+            <button class="shadow">
+                <i><span class="material-symbols-outlined icon-size" id="shadow">
+                    circle
                 </span></i>
             </button>
 
@@ -1525,6 +1578,22 @@
     var fullVisible = false;
     var tutorialVisible = false;
     var rotationLocked = false;
+    var sectorShadowed = false;
+
+    var indexNow = 1
+
+    function enableShadow(){
+        if (sectorShadowed){
+            $('.wheel-one-place').addClass('shadowed')
+            $(`#wheel-${artists[indexNow]['stroke']}`).removeClass('shadowed')
+        }
+    }
+    function disableShadow(){
+        if (!sectorShadowed){
+            $('.wheel-one-place').removeClass('shadowed')
+        }
+    }
+    // enableShadow()
 
     $( document ).ready(function(event) {
 
@@ -1638,6 +1707,7 @@
             tutorialVisible = true
         }
 
+        enableShadow()
     });
 
     var el, rot = 0;
@@ -1682,6 +1752,7 @@
     function rotateContainer(){
         var rotation = rot % 360
         var index = Math.ceil((rotation < 0 ? 360 - (-rotation) : rotation) / (360/numberOfSectors) + 1)
+        indexNow = index
         
         $('.wheel-one-place').css('transform', ("rotate( " + rot + "deg )" + (zoomed ? " scale(" + scale + ")" : "scale(1)")))
 
@@ -1798,6 +1869,8 @@
 
         rotateContainer()
 
+        enableShadow()
+
         $('#name').html(`<h1>${artists[index]['name']}</h1>`)
         rightHalf.style.backgroundColor = `#${artists[index]['color']}`
         bg.style.backgroundColor = `#${artists[index]['color']}`
@@ -1899,6 +1972,18 @@
         if (!fullVisible){
             $('.full-image').addClass('hidden-smooth')
             $('.full-image').removeClass('visible-smooth')
+        }
+    });
+    $(document).on('click', '.shadow', function (e) {
+        sectorShadowed = !sectorShadowed
+        
+        if (sectorShadowed){
+            enableShadow()
+            $('#shadow').html('ev_shadow')
+        }
+        else{
+            disableShadow()
+            $('#shadow').html('circle')
         }
     });
 
