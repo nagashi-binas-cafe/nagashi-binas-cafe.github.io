@@ -1120,6 +1120,9 @@
     .shadowed{
         filter: brightness(25%)
     }
+    .on-top{
+        z-index: 15;
+    }
 
 </style>
 </head>
@@ -1586,11 +1589,14 @@
         if (sectorShadowed){
             $('.wheel-one-place').addClass('shadowed')
             $(`#wheel-${artists[indexNow]['stroke']}`).removeClass('shadowed')
+            $('.wheel-one-place').css({'z-index': ''})
+            $(`#wheel-${artists[indexNow]['stroke']}`).css({'z-index': '15'})
         }
     }
     function disableShadow(){
         if (!sectorShadowed){
             $('.wheel-one-place').removeClass('shadowed')
+            $('.wheel-one-place').css({'z-index': ''})
         }
     }
     // enableShadow()
@@ -1699,7 +1705,7 @@
             $('.image-loader').append(`<img src="${value['full']}" />`)
         }
 
-        if (getCookie('tutorialed8') == 'True'){
+        if (getCookie('tutorialed9') == 'True'){
             $('.tutorial').addClass('hidden')
             $('.tutorial').addClass('hidden-smooth')
         }
@@ -1941,7 +1947,7 @@
     $(document).on('click', '.tutorial', function (e) {
         $('.tutorial').addClass('hidden-smooth')
         tutorialVisible = false
-        document.cookie = "tutorialed8=True";
+        document.cookie = "tutorialed9=True";
     });
 
     function full(){
